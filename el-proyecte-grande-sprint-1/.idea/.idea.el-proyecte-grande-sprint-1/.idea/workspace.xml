@@ -6,16 +6,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b556c1b4-45f9-429c-bc48-296b5a232cd6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.el-proyecte-grande-sprint-1/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.el-proyecte-grande-sprint-1/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.el-proyecte-grande-sprint-1/.idea/projectSettingsUpdater.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.el-proyecte-grande-sprint-1/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../empty!.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.el-proyecte-grande-sprint-1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.el-proyecte-grande-sprint-1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el-proyecte-grande-sprint-1/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/el-proyecte-grande-sprint-1/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el-proyecte-grande-sprint-1/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/el-proyecte-grande-sprint-1/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el-proyecte-grande-sprint-1/el-proyecte-grande-sprint-1.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/el-proyecte-grande-sprint-1/el-proyecte-grande-sprint-1.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/el-proyecte-grande-sprint-1/Pages/Shared/_LoginPartial.cshtml" root0="SKIP_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/37a954845b52703c5cce1aacf8fa1292378878e82bf68c4c4b5effc447316e9/IdentityUser.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -31,10 +34,14 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlserver"
+    ]
   }
 }]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.el-proyecte-grande-sprint-1: IIS Express">
@@ -77,7 +84,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1670246820954</updated>
-      <workItem from="1670246827304" duration="341000" />
+      <workItem from="1670246827304" duration="3170000" />
     </task>
     <servers />
   </component>
