@@ -1,11 +1,12 @@
 ﻿import Carousel from 'react-bootstrap/Carousel'
 import firstSlide from '../../images/first_slide_carousel.jpg'
 import adSpaceImgBlack from '../../images/ad_space_img_black.png'
-
+import thirdSlide from '../../images/Logo/png/logo-white-third-slide.png'
+import './MainSlider.css'
 
 function MainSlider() {
     return (
-        <Carousel className={"min-vw-100"}>
+        <Carousel className="min-vw-100">
             <Carousel.Item>
                 <img
                     style={{height: "65vh"}}
@@ -13,6 +14,7 @@ function MainSlider() {
                     src={firstSlide}
                     alt="First slide"
                 />
+                <div className={"image_shadow"}></div>
                 <Carousel.Caption>
                     <h5>First slide label</h5>
                     <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
@@ -25,6 +27,7 @@ function MainSlider() {
                     src={adSpaceImgBlack}
                     alt="Second slide"
                 />
+                <div className={"image_shadow"}></div>
                 <Carousel.Caption>
                     <h5>Second slide label</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -34,9 +37,10 @@ function MainSlider() {
                 <img
                     style={{height: "65vh"}}
                     className="d-block m-auto"
-                    src="holder.js/800x400?text=Third slide&bg=e5e5e5"
+                    src={thirdSlide}
                     alt="Third slide"
                 />
+                <div className={"image_shadow"}></div>
                 <Carousel.Caption>
                     <h5>Third slide label</h5>
                     <p>

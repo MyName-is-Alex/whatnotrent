@@ -3,6 +3,7 @@ import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from '
 import { Link } from 'react-router-dom';
 import { LoginMenu } from './api-authorization/LoginMenu';
 import './NavMenu.css';
+import logo from '../images/Logo/png/logo-color-website.png';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -25,8 +26,15 @@ export class NavMenu extends Component {
   render() {
     return (
       <header>
-        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" container light>
-          <NavbarBrand tag={Link} to="/">el_proyecte_grande</NavbarBrand>
+        <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow" container light>
+          <NavbarBrand tag={Link} to="/" className={"d-flex"}>
+            <img 
+                className={"shadow"}
+                style={{width: "100px", borderRadius: "10px"}}
+                alt="Whatnot Rent" 
+                src={logo}/>
+            <span className={"mx-3 align-self-center"}>Why Not Rent?</span>
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
             <ul className="navbar-nav flex-grow">
