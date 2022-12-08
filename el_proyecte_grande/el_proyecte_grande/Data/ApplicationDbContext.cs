@@ -8,6 +8,8 @@ namespace el_proyecte_grande.Data;
 
 public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
 {
+    public DbSet<Product> Product { get; set; }
+    public DbSet<Photo> Photo { get; set; }
     public ApplicationDbContext(DbContextOptions options, IOptions<OperationalStoreOptions> operationalStoreOptions)
         : base(options, operationalStoreOptions)
     {

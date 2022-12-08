@@ -6,7 +6,7 @@ import './MainSlider.css'
 
 function MainSlider() {
     return (
-        <Carousel className="min-vw-100">
+        <Carousel className="min-vw-100" style={{backgroundColor: "black"}}>
             <Carousel.Item>
                 <img
                     style={{height: "65vh"}}
