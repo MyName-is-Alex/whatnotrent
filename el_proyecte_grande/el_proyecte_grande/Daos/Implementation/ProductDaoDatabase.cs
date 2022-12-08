@@ -9,7 +9,7 @@ public class ProductDaoDatabase : IProductDao
     
     public void Add(Product item)
     {
-        throw new NotImplementedException();
+        
     }
 
     public void Remove(int id)
