@@ -9,6 +9,7 @@ public static class Extensions
     public static IQueryable<Product> GetCompleteProducts(this ApplicationDbContext context)
     {
         return context.Product
+            .Include(c => c.User)
             .Include(b => b.Photos);
     }
 }
