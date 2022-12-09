@@ -7,6 +7,11 @@ namespace el_proyecte_grande.Daos.Implementation;
 public class ProductDaoDatabase : IProductDao
 {
     private ApplicationDbContext _context;
+
+    public ProductDaoDatabase(ApplicationDbContext context)
+    {
+        _context = context;
+    }
     
     public void Add(Product item)
     {

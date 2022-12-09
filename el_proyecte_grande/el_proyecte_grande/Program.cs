@@ -1,8 +1,6 @@
 using el_proyecte_grande.Daos;
 using el_proyecte_grande.Daos.Implementation;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using el_proyecte_grande.Data;
 using el_proyecte_grande.Models;

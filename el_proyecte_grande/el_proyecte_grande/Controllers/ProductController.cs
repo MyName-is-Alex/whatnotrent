@@ -1,4 +1,5 @@
 ﻿using el_proyecte_grande.Daos;
+using el_proyecte_grande.Models;
 using el_proyecte_grande.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -6,21 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 namespace el_proyecte_grande.Controllers;
 
 [Authorize]
-[ApiController, Route("/api/product")]
+[ApiController]
+[Route("[controller]")]
 public class ProductController : ControllerBase
 {
-    public ProductService ProductService { get; }
-    
+    private ProductService _productService;
+        
     public ProductController(IProductDao productDao)
     {
-        ProductService = new ProductService(productDao);
+        _productService = new ProductService(productDao);
     }
-    
+
     [AllowAnonymous]
-    [HttpGet("/products")]
-    public IActionResult GetProducts()
+    [HttpGet]
+    public IActionResult Get()
     {
-        var products = ProductService.GetAllProducts();
+        var products = _productService.GetAllProducts();
         return Ok(products);
     }
 }
