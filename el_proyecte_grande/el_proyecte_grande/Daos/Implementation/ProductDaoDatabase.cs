@@ -27,7 +27,7 @@ public class ProductDaoDatabase : IProductDao
         => _context.GetCompleteProducts().Single(x => x.Id == id);
 
     public IEnumerable<Product> GetAll() 
-        => _context.GetCompleteProducts();
+        => _context.GetCompleteProducts().AsQueryable();
 
     public IEnumerable<Product> GetBy(ApplicationUser user)
         => _context.GetCompleteProducts().Where(x => x.User == user);

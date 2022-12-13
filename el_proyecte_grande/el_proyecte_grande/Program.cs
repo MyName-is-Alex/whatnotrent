@@ -1,3 +1,4 @@
+using Amazon.S3;
 using el_proyecte_grande.Daos;
 using el_proyecte_grande.Daos.Implementation;
 using Microsoft.AspNetCore.Authentication;
@@ -27,6 +28,9 @@ builder.Services.AddAuthentication()
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+builder.Services.AddAWSService<IAmazonS3>();
 
 var app = builder.Build();
 

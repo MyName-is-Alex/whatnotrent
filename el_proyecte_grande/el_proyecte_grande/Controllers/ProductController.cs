@@ -1,8 +1,12 @@
-﻿using el_proyecte_grande.Daos;
+﻿using Amazon.S3;
+using Amazon.S3.Model;
+using AutoMapper.Internal;
+using el_proyecte_grande.Daos;
 using el_proyecte_grande.Models;
 using el_proyecte_grande.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using el_proyecte_grande.Utils;
 
 namespace el_proyecte_grande.Controllers;
 
@@ -11,18 +15,27 @@ namespace el_proyecte_grande.Controllers;
 [Route("[controller]")]
 public class ProductController : ControllerBase
 {
-    private ProductService _productService;
+    private readonly ProductService _productService;
+    private readonly PhotoService _photoService;
+    private IAmazonS3 _s3Client;
         
-    public ProductController(IProductDao productDao)
+    public ProductController(IProductDao productDao, IAmazonS3 s3Client)
     {
+        _s3Client = s3Client;
         _productService = new ProductService(productDao);
+        _photoService = new PhotoService(s3Client);
     }
 
     [AllowAnonymous]
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get()
     {
         var products = _productService.GetAllProducts();
-        return Ok(products);
+        /*foreach (var product in products)
+        {
+            product.Photos = await _photoService.DownloadPhotosForProductAsync(product.Id);
+        }*/
+        var productsWithPhotos = await products.GetProductsWithPhotos(_photoService);
+        return Ok(productsWithPhotos);
     }
 }

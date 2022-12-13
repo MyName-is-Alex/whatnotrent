@@ -1,18 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace el_proyecte_grande.Models;
+﻿namespace el_proyecte_grande.Models;
 
 public class Photo
 {
-    [Key]
-    public int Id { get; set; }
-    public byte[] Bytes { get; set; }
-    public string Description { get; set; }
-    public string FileExtension { get; set; }
-    public decimal Size { get; set; }
     public int ProductId { get; set; }
-    
-    [ForeignKey("ProductId")]
-    public Product Product { get; set; }
+    public List<string> URLs { get; set; }
 }

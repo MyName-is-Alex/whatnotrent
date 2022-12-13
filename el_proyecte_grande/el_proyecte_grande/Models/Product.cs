@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using el_proyecte_grande.Utils;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,5 +18,6 @@ public class Product
     public DateTime EndDate { get; set; }
         
     public ApplicationUser? User { get; set; }
-    public List<Photo>? Photos { get; set; }
+    [NotMapped]
+    public Photo? Photos { get; set; }
 }

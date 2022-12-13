@@ -13,5 +13,7 @@ public class ProductService
     }
 
     public IEnumerable<Product> GetAllProducts()
-        => productDao.GetAll();
+    {
+        return productDao.GetAll();    
+    }
 }

@@ -3,10 +3,15 @@ import firstSlide from '../../images/first_slide_carousel.jpg'
 import adSpaceImgBlack from '../../images/ad_space_img_black.png'
 import thirdSlide from '../../images/Logo/png/logo-white-third-slide.png'
 import './MainSlider.css'
+import {useEffect, useRef} from "react";
 
 function MainSlider() {
     return (
-        <Carousel className="min-vw-100" style={{backgroundColor: "black"}}>
+        <Carousel 
+            className="min-vw-100" style={{backgroundColor: "black"}} 
+            onMouseEnter={() => {onMouseActionShadow("enter")}} 
+            onMouseLeave={() => {onMouseActionShadow("leave")}}
+        >
             <Carousel.Item>
                 <img
                     style={{height: "65vh"}}
@@ -50,6 +55,14 @@ function MainSlider() {
             </Carousel.Item>
         </Carousel>
     );
+}
+
+const onMouseActionShadow = (action) => {
+    const boxShadow = document.querySelectorAll(".image_shadow");
+    boxShadow.forEach((x) => {
+        if (action === "enter") x.classList.add("image_shadow_hover")
+        else if (action === "leave") x.classList.remove("image_shadow_hover")
+    })
 }
 
 export default MainSlider;

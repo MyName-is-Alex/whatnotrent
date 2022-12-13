@@ -6,7 +6,8 @@
     top: 0;
     transition: box-shadow 0.2s ease-in;
     left: 0;
+    z-index: 1;
 }
-.image_shadow:hover {
-    box-shadow: none;
+.image_shadow_hover {
+    box-shadow: none !important;
 }
