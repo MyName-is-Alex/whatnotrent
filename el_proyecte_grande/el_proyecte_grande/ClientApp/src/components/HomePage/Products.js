@@ -9,7 +9,7 @@ const Products = () => {
         populateProductsData().then((data) => {
             setProductList({ products: data, loading: false })
         })
-    })
+    }, []);
     
     return (
         productList.loading
@@ -39,6 +39,7 @@ const renderProductsComponent = (products) => {
                     endDate={product["endDate"]}
                     price={product["price"]}
                     unit={product["unit"]}
+                    photos={product["photos"]}
                 />
             ))}
         </div>
