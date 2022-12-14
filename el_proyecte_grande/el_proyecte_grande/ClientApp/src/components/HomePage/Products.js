@@ -20,7 +20,7 @@ const Products = () => {
 
 async function populateProductsData() {
     const token = await authService.getAccessToken();
-    const response = await fetch('/product', {
+    const response = await fetch('api/product', {
         headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
     });
     
@@ -33,8 +33,8 @@ const renderProductsComponent = (products) => {
             {products.map((product) => (
                 <Product 
                     key={product["id"]} 
-                    title={product["name"]} 
-                    description={product["description"]}
+                    id={product["id"]}
+                    title={product["name"]}
                     startDate={product["startDate"]}
                     endDate={product["endDate"]}
                     price={product["price"]}

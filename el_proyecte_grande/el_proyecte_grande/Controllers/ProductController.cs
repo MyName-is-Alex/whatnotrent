@@ -12,7 +12,7 @@ namespace el_proyecte_grande.Controllers;
 
 [Authorize]
 [ApiController]
-[Route("[controller]")]
+[Route("api/product")]
 public class ProductController : ControllerBase
 {
     private readonly ProductService _productService;
@@ -28,7 +28,7 @@ public class ProductController : ControllerBase
 
     [AllowAnonymous]
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetAll()
     {
         var products = _productService.GetAllProducts();
         /*foreach (var product in products)
@@ -37,5 +37,13 @@ public class ProductController : ControllerBase
         }*/
         var productsWithPhotos = await products.GetProductsWithPhotos(_photoService);
         return Ok(productsWithPhotos);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("/{productId}")]
+    public IActionResult Get(int productId)
+    {
+        var product = _productService.GetProductById(productId);
+        return Ok(product);
     }
 }

@@ -12,6 +12,10 @@ public class ProductService
         this.productDao = productDao;
     }
 
+    public Product GetProductById(int productId)
+    {
+        return productDao.Get(productId);
+    }
     public IEnumerable<Product> GetAllProducts()
     {
         return productDao.GetAll();    

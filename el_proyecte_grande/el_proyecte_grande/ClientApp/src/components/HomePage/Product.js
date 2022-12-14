@@ -4,7 +4,7 @@ import './Product.css'
 import {useState} from "react";
 
 
-const Product = ({ title, description, startDate, endDate, price, unit, photos }) => {
+const Product = ({ id, title, startDate, endDate, price, unit, photos }) => {
     return (
         <Card 
             className={"m-2 card_container"} 
@@ -23,9 +23,9 @@ const Product = ({ title, description, startDate, endDate, price, unit, photos }
                 <ListGroup.Item 
                     className='group_item mt-4'
                     style={{ fontWeight: 'bold', fontSize: '1rem'}}
-                >{price} <span style={{fontSize: '0.7rem'}}>RON / {restoredUnits[unit]}</span></ListGroup.Item>
+                >{price} <span style={{ fontSize: '0.7rem' }}>RON / {restoredUnits[unit]}</span></ListGroup.Item>
             </ListGroup>
-            <a href="#" className={"card_link"}></a>
+            <a href={`product-details/${id}/${title}`} className="card_link" ></a>
         </Card>
     );
 }
