@@ -39,7 +39,7 @@ const renderProductsComponent = (products) => {
                     endDate={product["endDate"]}
                     price={product["price"]}
                     unit={product["unit"]}
-                    photos={product["photos"]}
+                    photo={product["photos"]["urLs"][0]}
                 />
             ))}
         </div>

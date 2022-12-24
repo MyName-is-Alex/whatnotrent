@@ -27,7 +27,7 @@ export class NavMenu extends Component {
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow" container light>
-          <NavbarBrand tag={Link} to="/" className={"d-flex"}>
+          <NavbarBrand tag={Link} to="/" className={"d-flex"} style={{wordBreak: "keep-all"}}>
             <img 
                 className={"shadow"}
                 style={{width: "100px", borderRadius: "10px"}}

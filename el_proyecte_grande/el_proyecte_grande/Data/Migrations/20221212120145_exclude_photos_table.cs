@@ -1,9 +1,8 @@
-﻿using System;
+﻿#nullable disable
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
-
-namespace el_proyecte_grande.Migrations
+namespace el_proyecte_grande.Data.Migrations
 {
     public partial class exclude_photos_table : Migration
     {

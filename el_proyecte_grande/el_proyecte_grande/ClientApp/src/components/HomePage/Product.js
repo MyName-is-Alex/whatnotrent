@@ -1,10 +1,10 @@
 ﻿import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import './Product.css'
-import {useState} from "react";
+import {Link} from "react-router-dom";
 
 
-const Product = ({ id, title, startDate, endDate, price, unit, photos }) => {
+const Product = ({ id, title, startDate, endDate, price, unit, photo }) => {
     return (
         <Card 
             className={"m-2 card_container"} 
@@ -12,7 +12,7 @@ const Product = ({ id, title, startDate, endDate, price, unit, photos }) => {
             onMouseLeave={(event) => OnMouseActionCard(event, 'leave')}
         >
             <div className='card_img_container'>
-                <Card.Img variant="top" src={photos.urLs[1]} className='card_img' />
+                <Card.Img variant="top" src={`/ProductsImages/${id}/${photo}`} className='card_img' alt={"Image Not Found"} />
             </div>
             <Card.Body className='card_body'>
                 <Card.Title style={{margin: '0'}}>{title}</Card.Title>
@@ -25,7 +25,7 @@ const Product = ({ id, title, startDate, endDate, price, unit, photos }) => {
                     style={{ fontWeight: 'bold', fontSize: '1rem'}}
                 >{price} <span style={{ fontSize: '0.7rem' }}>RON / {restoredUnits[unit]}</span></ListGroup.Item>
             </ListGroup>
-            <a href={`product-details/${id}/${title}`} className="card_link" ></a>
+            <Link to={`product-details/${title}?productId=${id}`} className="card_link" ></Link>
         </Card>
     );
 }

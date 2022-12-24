@@ -1,0 +1,24 @@
+﻿
+.main_slide {
+    padding: 15px 15px;
+    background: #ffffff;
+    margin-bottom: 15px;
+}
+.img_container {
+    display: flex;
+    justify-content: center;
+    background: #FFFFFF;
+}
+.main_img {
+    width: 90%;
+    position: relative;
+}
+.thumb_slide {
+    height: fit-content!important;
+    padding: 20px!important;
+    background: #FFFFFF;
+}
+.thumb_img {
+    height: 120px!important;
+    width: 100%;
+}

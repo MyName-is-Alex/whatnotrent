@@ -13,12 +13,11 @@ public static class Extensions
             .Include(c => c.User);
     }
 
-    public static async Task<IEnumerable<Product>> GetProductsWithPhotos(this IEnumerable<Product> products, PhotoService photoService)
+    public static void AddPhotos(this IEnumerable<Product> products, PhotoService photoService)
     {
         foreach (var product in products)
         {
-            product.Photos = await photoService.DownloadPhotosForProductAsync(product.Id);
+            product.Photos = photoService.GetPhotosForProduct(product.Id);
         }
-        return products;
     }
 }
