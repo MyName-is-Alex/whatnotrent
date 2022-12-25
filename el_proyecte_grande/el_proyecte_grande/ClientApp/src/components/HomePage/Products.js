@@ -1,6 +1,7 @@
 ﻿import authService from '../api-authorization/AuthorizeService'
 import React, {useEffect, useState} from "react";
 import Product from './Product';
+import Loading from '../Loading'
 
 const Products = () => {
     const [productList, setProductList] = useState({ products: [], loading: true });
@@ -13,7 +14,7 @@ const Products = () => {
     
     return (
         productList.loading
-        ? <p><em>Loading...</em></p>
+        ? <Loading />
         : renderProductsComponent(productList.products)
     );
 }

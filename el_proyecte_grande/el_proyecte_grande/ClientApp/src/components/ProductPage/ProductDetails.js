@@ -3,6 +3,7 @@ import React, {useEffect, useRef, useState} from "react";
 import authService from "../api-authorization/AuthorizeService";
 import SlideShow from "./ProductDetailsSlideShow";
 import ProductInfo from "./ProductInfo";
+import Loading from "../Loading";
 import '@splidejs/splide/css/sea-green';
 import './ProductDetails.css';
 
@@ -20,7 +21,7 @@ const ProductDetails = () => {
     
     return (
         productDetails.loading 
-            ? <p><em>Loading...</em></p> 
+            ? <Loading />
             : (
                 <div className={"container row m-auto justify-content-around"}>
                     <SlideShow 
@@ -28,7 +29,7 @@ const ProductDetails = () => {
                         photos={productDetails.product["photos"]["urLs"]} 
                         classNames={"col-sm-12 col-lg-7 col-xl-5 mt-5"
                     }/>
-                    <ProductInfo product={productDetails.product} className={"mt-5 col-lg-5 col-xl-7 text-center"} />
+                    <ProductInfo product={productDetails.product} className={"mt-lg-5 col-lg-5 col-xl-7 text-center"} />
                 </div>
             )
     )    
