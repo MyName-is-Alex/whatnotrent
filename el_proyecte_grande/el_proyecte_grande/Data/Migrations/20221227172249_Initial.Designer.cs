@@ -12,8 +12,8 @@ using el_proyecte_grande.Data;
 namespace el_proyecte_grande.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221208171002_Products")]
-    partial class Products
+    [Migration("20221227172249_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -230,7 +230,7 @@ namespace el_proyecte_grande.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("el_proyecte_grande.Models.Photo", b =>
+            modelBuilder.Entity("el_proyecte_grande.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -238,29 +238,17 @@ namespace el_proyecte_grande.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte[]>("Bytes")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FileExtension")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Size")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Photo");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("el_proyecte_grande.Models.Product", b =>
@@ -270,6 +258,9 @@ namespace el_proyecte_grande.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -291,7 +282,14 @@ namespace el_proyecte_grande.Data.Migrations
                     b.Property<int>("Unit")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Product");
                 });
@@ -433,15 +431,21 @@ namespace el_proyecte_grande.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("el_proyecte_grande.Models.Photo", b =>
+            modelBuilder.Entity("el_proyecte_grande.Models.Product", b =>
                 {
-                    b.HasOne("el_proyecte_grande.Models.Product", "Product")
-                        .WithMany("Photos")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("el_proyecte_grande.Models.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.HasOne("el_proyecte_grande.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -495,9 +499,9 @@ namespace el_proyecte_grande.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("el_proyecte_grande.Models.Product", b =>
+            modelBuilder.Entity("el_proyecte_grande.Models.Category", b =>
                 {
-                    b.Navigation("Photos");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

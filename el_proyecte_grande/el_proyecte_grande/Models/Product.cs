@@ -16,8 +16,9 @@ public class Product
     public TimeUnit Unit { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-        
-    public ApplicationUser? User { get; set; }
+    
+    public Category Category { get; set; }
+    public ApplicationUser User { get; set; }
     [NotMapped]
     public Photo? Photos { get; set; }
 }
