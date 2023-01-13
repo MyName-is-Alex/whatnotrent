@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using el_proyecte_grande.Data;
 using el_proyecte_grande.Models;
+using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IProductDao, ProductDaoDatabase>();
+builder.Services.AddScoped<IDao<Category>, CategoryDaoDatabase>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

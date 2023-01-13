@@ -36,6 +36,7 @@
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="ClientApp\public\ProductsImages" />
       <Folder Include="ClientApp\src\images\usersImages" />
     </ItemGroup>
 

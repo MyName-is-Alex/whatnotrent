@@ -13,9 +13,12 @@ public class ProductDaoDatabase : IProductDao
         _context = context;
     }
     
-    public void Add(Product item)
+    public int Add(Product item)
     {
-        throw new NotImplementedException();
+        _context.Product.Add(item);
+        _context.SaveChanges();
+        var result = _context.Product.Single(x => x.Equals(item)).Id;
+        return result;
     }
 
     public void Remove(int id)

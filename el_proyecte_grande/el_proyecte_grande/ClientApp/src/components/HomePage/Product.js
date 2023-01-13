@@ -4,7 +4,7 @@ import './Product.css'
 import {Link} from "react-router-dom";
 
 
-const Product = ({ id, title, startDate, endDate, price, unit, photo }) => {
+const Product = ({ id, title, startDate, endDate, price, unit, photo, timeUnit }) => {
     return (
         <Card 
             className={"m-2 card_container"} 
@@ -23,7 +23,7 @@ const Product = ({ id, title, startDate, endDate, price, unit, photo }) => {
                 <ListGroup.Item 
                     className='group_item mt-4'
                     style={{ fontWeight: 'bold', fontSize: '1rem'}}
-                >{price} <span style={{ fontSize: '0.7rem' }}>RON / {restoredUnits[unit]}</span></ListGroup.Item>
+                >{price} <span style={{ fontSize: '0.7rem' }}>RON / {timeUnit}</span></ListGroup.Item>
             </ListGroup>
             <Link to={`product-details/${title}?productId=${id}`} className="card_link" ></Link>
         </Card>
@@ -44,10 +44,10 @@ const OnMouseActionCard = (event, action) => {
 }
 
 const restoredUnits = {
-    1: "HOUR",
-    2: "DAY",
-    3: "MONTH",
-    4: "YEAR"
+    0: "HOUR",
+    1: "DAY",
+    2: "MONTH",
+    3: "YEAR"
 }
 
 export default Product;

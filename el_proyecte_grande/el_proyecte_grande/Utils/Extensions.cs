@@ -10,7 +10,8 @@ public static class Extensions
     public static IQueryable<Product> GetCompleteProducts(this ApplicationDbContext context)
     {
         return context.Product
-            .Include(c => c.User);
+            .Include(c => c.User)
+            .Include(d => d.Category);
     }
 
     public static void AddPhotos(this IEnumerable<Product> products, PhotoService photoService)

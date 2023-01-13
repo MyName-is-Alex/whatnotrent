@@ -4,8 +4,18 @@ import Product from './Product';
 import Loading from '../Loading'
 
 const Products = () => {
-    const [productList, setProductList] = useState({ products: [], loading: true });
+    // get form template from backend START
+    const [formCategories, setFormCategories] = useState([]);
+    const [formTimeUnits, setFormTimeUnits] = useState([]);
+    useEffect(() => {
+        populateForm().then((data) => {
+            setFormCategories(data['categories'])
+            setFormTimeUnits(data['timeUnits'])
+        })
+    },[])
+    // get form template from backend END
     
+    const [productList, setProductList] = useState({ products: [], loading: true });
     useEffect(() => {
         populateProductsData().then((data) => {
             setProductList({ products: data, loading: false })
@@ -15,7 +25,7 @@ const Products = () => {
     return (
         productList.loading
         ? <Loading />
-        : renderProductsComponent(productList.products)
+        : renderProductsComponent(productList.products, formTimeUnits)
     );
 }
 
@@ -28,7 +38,7 @@ async function populateProductsData() {
     return await response.json();
 }
 
-const renderProductsComponent = (products) => {
+const renderProductsComponent = (products, formTimeUnits) => {
     return (
         <div style={{maxWidth: "100vw"}} className={"container row justify-content-center"}>
             {products.map((product) => (
@@ -41,10 +51,20 @@ const renderProductsComponent = (products) => {
                     price={product["price"]}
                     unit={product["unit"]}
                     photo={product["photos"]["urLs"][0]}
+                    timeUnit={formTimeUnits[product["unit"]]}
                 />
             ))}
         </div>
     )
+}
+
+async function populateForm() {
+    const token = await authService.getAccessToken();
+    const response = await fetch('api/product/get-form-info', {
+        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+    });
+
+    return await response.json();
 }
 
 export default Products;
