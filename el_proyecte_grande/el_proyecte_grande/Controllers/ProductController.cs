@@ -33,11 +33,7 @@ public class ProductController : ControllerBase
     {
         var products = _productService.GetAllProducts();
         products.AddPhotos(_photoService);
-
-        /*return new JsonResult(
-            products,
-            new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve }
-            );*/
+        
         return Ok(products);
     }
 
@@ -65,10 +61,6 @@ public class ProductController : ControllerBase
     [HttpPost("add-product")]
     public IActionResult AddProduct([FromForm] UploadProductForm file)
     {
-        var formFile = file;
-        var unittest = file.Unit;
-        var categoryTest = file.CategoryId;
-        
         var category = _categoryService.GetCategoryById(file.CategoryId);
         var productId = _productService.AddProduct(file, category);
         _photoService.UploadPhotosForProduct(file.Images, productId);
