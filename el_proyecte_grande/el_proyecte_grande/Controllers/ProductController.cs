@@ -26,7 +26,7 @@ public class ProductController : ControllerBase
         _productService = new ProductService(productDao);
         _photoService = new PhotoService();
     }
-
+    
     [AllowAnonymous]
     [HttpGet]
     public IActionResult GetAll()
@@ -36,8 +36,7 @@ public class ProductController : ControllerBase
         
         return Ok(products);
     }
-
-    [AllowAnonymous]
+    
     [HttpGet("{productId}")]
     public IActionResult Get(int productId)
     {
@@ -45,7 +44,7 @@ public class ProductController : ControllerBase
         product.Photos = _photoService.GetPhotosForProduct(productId);
         return Ok(product);
     }
-
+    
     [AllowAnonymous]
     [HttpGet("get-form-info")]
     public IActionResult GetFormInfo()
@@ -57,7 +56,6 @@ public class ProductController : ControllerBase
         return Ok(new { categories, timeUnits });
     }
     
-    [AllowAnonymous]
     [HttpPost("add-product")]
     public IActionResult AddProduct([FromForm] UploadProductForm file)
     {

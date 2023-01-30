@@ -1,11 +1,12 @@
 ﻿import {useSearchParams} from "react-router-dom";
 import React, {useEffect, useRef, useState} from "react";
-import authService from "../api-authorization/AuthorizeService";
 import SlideShow from "./ProductDetailsSlideShow";
 import ProductInfo from "./ProductInfo";
 import Loading from "../Loading";
 import '@splidejs/splide/css/sea-green';
 import './ProductDetails.css';
+import authHeader from "../api-authorization/authHeader";
+import axios from "axios";
 
 const ProductDetails = () => {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -36,12 +37,11 @@ const ProductDetails = () => {
 }
 
 async function populateProductDetails(productId) {
-    const token = await authService.getAccessToken();
-    const response = await fetch(`/api/product/${productId}`, {
-        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-    });
+    // TODO get access token for product details
+    console.log(authHeader())
+    const response = await axios.get(`/api/product/${productId}`, authHeader());
     
-    return response.json();
+    return response["data"];
 }
 
 export default ProductDetails;

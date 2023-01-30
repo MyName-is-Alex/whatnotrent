@@ -1,10 +1,5 @@
 export const ApplicationName = 'el_proyecte_grande';
 
-export const QueryParameterNames = {
-  ReturnUrl: 'returnUrl',
-  Message: 'message'
-};
-
 export const LogoutActions = {
   LogoutCallback: 'logout-callback',
   Logout: 'logout',
@@ -19,20 +14,17 @@ export const LoginActions = {
   Register: 'register'
 };
 
-const prefix = '/authentication';
+const prefix = 'authentication';
 
 export const ApplicationPaths = {
   DefaultLoginRedirectPath: '/',
-  ApiAuthorizationClientConfigurationUrl: `_configuration/${ApplicationName}`,
-  ApiAuthorizationPrefix: prefix,
-  Login: `${prefix}/${LoginActions.Login}`,
-  LoginFailed: `${prefix}/${LoginActions.LoginFailed}`,
-  LoginCallback: `${prefix}/${LoginActions.LoginCallback}`,
-  Register: `${prefix}/${LoginActions.Register}`,
-  Profile: `${prefix}/${LoginActions.Profile}`,
-  LogOut: `${prefix}/${LogoutActions.Logout}`,
-  LoggedOut: `${prefix}/${LogoutActions.LoggedOut}`,
-  LogOutCallback: `${prefix}/${LogoutActions.LogoutCallback}`,
-  IdentityRegisterPath: 'Identity/Account/Register',
-  IdentityManagePath: 'Identity/Account/Manage'
+  Login: `${prefix}/${LoginActions.Login}/form`,
+  Register: `${prefix}/${LoginActions.Register}/form`,
+  Logout: `${prefix}/${LogoutActions.Logout}`,
+  Profile: "#"
+  /*LoginFailed: `${prefix}/${LoginActions.LoginFailed}`,*/
+  /*LoginCallback: `${prefix}/${LoginActions.LoginCallback}`,*/
+  /*Profile: `${prefix}/${LoginActions.Profile}`,*/
+  /*LoggedOut: `${prefix}/${LogoutActions.LoggedOut}`,*/
+  /*LogOutCallback: `${prefix}/${LogoutActions.LogoutCallback}`,*/
 };

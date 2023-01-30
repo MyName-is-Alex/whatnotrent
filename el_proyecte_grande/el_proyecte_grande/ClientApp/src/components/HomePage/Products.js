@@ -1,7 +1,8 @@
-﻿import authService from '../api-authorization/AuthorizeService'
-import React, {useEffect, useState} from "react";
+﻿import React, {useEffect, useState} from "react";
 import Product from './Product';
 import Loading from '../Loading'
+import authHeader from "../api-authorization/authHeader";
+import axios from "axios";
 
 const Products = () => {
     // get form template from backend START
@@ -30,12 +31,9 @@ const Products = () => {
 }
 
 async function populateProductsData() {
-    const token = await authService.getAccessToken();
-    const response = await fetch('api/product', {
-        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-    });
-    
-    return await response.json();
+    // TODO token
+    const response = await axios.get('api/product', authHeader());
+    return await response["data"]; 
 }
 
 const renderProductsComponent = (products, formTimeUnits) => {
@@ -59,12 +57,10 @@ const renderProductsComponent = (products, formTimeUnits) => {
 }
 
 async function populateForm() {
-    const token = await authService.getAccessToken();
-    const response = await fetch('api/product/get-form-info', {
-        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-    });
+    // TODO token
+    const response = await axios.get('api/product/get-form-info', authHeader());
 
-    return await response.json();
+    return await response["data"];
 }
 
 export default Products;

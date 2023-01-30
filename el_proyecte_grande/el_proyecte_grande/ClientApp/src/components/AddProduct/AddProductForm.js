@@ -2,10 +2,13 @@
 import {useEffect, useState} from "react";
 import {Button, Col, Row} from "reactstrap";
 import axios from "axios";
-import authService from "../api-authorization/AuthorizeService";
 import FormImages from "./FormImages";
+import authHeader from "../api-authorization/authHeader";
 
-const AddProductForm = () => {
+//TODO Add loading screen
+//TODO Add redirect to message after posting
+
+const AddProductForm = ({ setIsCompleted }) => {
     // get form template from backend START
     const [formCategories, setFormCategories] = useState([]);
     const [formTimeUnits, setFormTimeUnits] = useState([]);
@@ -30,19 +33,15 @@ const AddProductForm = () => {
     const [files, setFiles] = useState({});
 
     const uploadForm = async (e) => {
-        if (e.currentTarget.checkValidity() === false) {
+        if (e.currentTarget.checkValidity() === false || Object.keys(files).length < 1) {
             e.preventDefault();
             e.stopPropagation();
+            setValidated(true);
+            return
         }
         setValidated(true);
         e.preventDefault();
         const formData = new FormData();
-        
-        if (Object.keys(files).length < 1) {
-            e.preventDefault();
-            e.stopPropagation();
-            return;
-        }
         
         formData.append("Name", name)
         formData.append("Description", description)
@@ -59,13 +58,8 @@ const AddProductForm = () => {
         }
 
         try {
-            const token = await authService.getAccessToken();
-            
-            const res = await axios.post("api/product/add-product", formData, {
-                headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-            })
-            console.log(res)
-            
+            await axios.post("api/product/add-product", formData, authHeader()) //TODO token
+            setIsCompleted(true)
         } catch (exception){
             console.log(exception)
         }
@@ -116,21 +110,23 @@ const AddProductForm = () => {
                         I recomend you see a doctor.
                     </Form.Control.Feedback>
                 </FloatingLabel>
-            </Row>    
-            <FloatingLabel label={"Choose a time unit!"}>
-                <Form.Select onChange={(e) => {
-                    setUnit(e.target.value)
-                }}>
-                    {renderTimeUnits(formTimeUnits)}
-                </Form.Select>
-            </FloatingLabel>
-            <FloatingLabel label={"Choose a category!"}>
-                <Form.Select onChange={(e) => {
-                    setCategory(e.target.value)
-                }}>
-                    {renderCategories(formCategories)}
-                </Form.Select>
-            </FloatingLabel>
+            </Row>  
+            <Row>
+                <FloatingLabel as={Col} label={"Choose a time unit!"}>
+                    <Form.Select onChange={(e) => {
+                        setUnit(e.target.value)
+                    }}>
+                        {renderTimeUnits(formTimeUnits)}
+                    </Form.Select>
+                </FloatingLabel>
+                <FloatingLabel as={Col} label={"Choose a category!"}>
+                    <Form.Select onChange={(e) => {
+                        setCategory(e.target.value)
+                    }}>
+                        {renderCategories(formCategories)}
+                    </Form.Select>
+                </FloatingLabel>
+            </Row>
             <FloatingLabel label={"Start Date"}>
                 <Form.Control 
                     required
@@ -168,12 +164,9 @@ const AddProductForm = () => {
 }
 
 async function populateForm() {
-    const token = await authService.getAccessToken();
-    const response = await fetch('api/product/get-form-info', {
-        headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-    });
-
-    return await response.json();
+    // TODO token
+    const response = await axios.get('api/product/get-form-info', authHeader());
+    return await response["data"];
 }
 
 function renderTimeUnits(formTimeUnits) {
