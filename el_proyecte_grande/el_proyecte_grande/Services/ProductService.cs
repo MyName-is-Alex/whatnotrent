@@ -22,7 +22,12 @@ public class ProductService
         return productDao.GetAll();    
     }
 
-    public int AddProduct(UploadProductForm input, Category category)
+    public IEnumerable<Product> GetPageProducts(int pageNumber)
+    {
+        return productDao.GetByPage(pageNumber);
+    }
+
+    public int AddProduct(UploadProductForm input, Category category, ApplicationUser user)
     {
         Product product = new Product
         {
@@ -33,7 +38,8 @@ public class ProductService
             StartDate = input.StartDate,
             EndDate = input.EndDate,
             Category = category,
-            Location = input.Location
+            Location = input.Location,
+            User = user
         };
 
         return productDao.Add(product);

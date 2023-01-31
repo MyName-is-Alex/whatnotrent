@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using System.Security.Claims;
+using Duende.IdentityServer.Extensions;
 using el_proyecte_grande.Daos;
 using el_proyecte_grande.Models;
 using el_proyecte_grande.Services;
@@ -7,7 +7,6 @@ using el_proyecte_grande.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace el_proyecte_grande.Controllers;
 
@@ -19,19 +18,21 @@ public class ProductController : ControllerBase
     private readonly ProductService _productService;
     private CategoryService _categoryService;
     private PhotoService _photoService;
+    private UserManager<ApplicationUser> _userManager;
 
-    public ProductController(IProductDao productDao, IDao<Category> categoryDao)
+    public ProductController(IProductDao productDao, IDao<Category> categoryDao, UserManager<ApplicationUser> userManager)
     {
         _categoryService = new CategoryService(categoryDao);
         _productService = new ProductService(productDao);
         _photoService = new PhotoService();
+        _userManager = userManager;
     }
     
     [AllowAnonymous]
-    [HttpGet]
-    public IActionResult GetAll()
+    [HttpGet("infinite/{pageNumber}")]
+    public IActionResult GetAll(int pageNumber)
     {
-        var products = _productService.GetAllProducts();
+        var products = _productService.GetPageProducts(pageNumber);
         products.AddPhotos(_photoService);
         
         return Ok(products);
@@ -57,10 +58,14 @@ public class ProductController : ControllerBase
     }
     
     [HttpPost("add-product")]
-    public IActionResult AddProduct([FromForm] UploadProductForm file)
+    public async Task<IActionResult> AddProduct([FromForm] UploadProductForm file)
     {
+        var claim = User.Identity as ClaimsIdentity;
+        var userId = claim?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
+        var user = await _userManager.FindByIdAsync(userId);
+
         var category = _categoryService.GetCategoryById(file.CategoryId);
-        var productId = _productService.AddProduct(file, category);
+        var productId = _productService.AddProduct(file, category, user);
         _photoService.UploadPhotosForProduct(file.Images, productId);
         
         return StatusCode(StatusCodes.Status201Created);

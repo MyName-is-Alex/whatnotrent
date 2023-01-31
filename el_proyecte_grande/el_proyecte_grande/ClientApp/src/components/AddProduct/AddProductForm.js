@@ -4,11 +4,10 @@ import {Button, Col, Row} from "reactstrap";
 import axios from "axios";
 import FormImages from "./FormImages";
 import authHeader from "../api-authorization/authHeader";
-
 //TODO Add loading screen
 //TODO Add redirect to message after posting
 
-const AddProductForm = ({ setIsCompleted }) => {
+const AddProductForm = ({ setIsCompleted, setBugFree }) => {
     // get form template from backend START
     const [formCategories, setFormCategories] = useState([]);
     const [formTimeUnits, setFormTimeUnits] = useState([]);
@@ -22,16 +21,19 @@ const AddProductForm = ({ setIsCompleted }) => {
     
     const [validated, setValidated] = useState(false);
     
-    const [name, setName] = useState();
-    const [description, setDescription] = useState();
-    const [price, setPrice] = useState();
-    const [unit, setUnit] = useState(0);
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [category, setCategory] = useState(1);
-    const [location, setLocation] = useState();
-    const [files, setFiles] = useState({});
-
+    const [formState, setFormState] = useState(
+        {
+            Name: null,
+            Description: null,
+            Price: null,
+            Unit: 0,
+            StartDate: null,
+            EndDate: null,
+            Category: 1,
+            Location: null
+        })
+    const [files, setFiles] = useState({})
+    
     const uploadForm = async (e) => {
         if (e.currentTarget.checkValidity() === false || Object.keys(files).length < 1) {
             e.preventDefault();
@@ -43,123 +45,179 @@ const AddProductForm = ({ setIsCompleted }) => {
         e.preventDefault();
         const formData = new FormData();
         
-        formData.append("Name", name)
-        formData.append("Description", description)
-        formData.append("Price", price)
-        formData.append("StartDate", startDate)
-        formData.append("EndDate", endDate)
-        formData.append("Location", location)
-        
-        formData.append("Unit", unit)
-        formData.append("CategoryId", category)
+        for (let element in formState) {
+            if (element === "Category") {
+                formData.append(`${element}Id`, formState[element])
+            } else {
+                formData.append(element, formState[element])
+            }
+        }
         
         for (const file in files) {
             formData.append(`Images`, files[file], files[file].name)
         }
-
-        try {
-            await axios.post("api/product/add-product", formData, authHeader()) //TODO token
-            setIsCompleted(true)
-        } catch (exception){
-            console.log(exception)
-        }
+        
+        await axios
+            .post("api/product/add-product", formData, authHeader())
+            .then(() => {
+                setIsCompleted(true)
+            })
+            .catch((error) => {
+                setBugFree(false)
+                console.log(error)
+            }) //TODO token
     };
     
     return (
-        <Form encType={"multipart/form-data"} onSubmit={uploadForm} noValidate validated={validated}>
-            <Row className={"mb-3"}>
-                <FloatingLabel as={Col} label={"What do you rent..."}>
-                    <Form.Control 
-                        required
-                        type={"text"} 
-                        placeholder={"Type a name..."}
-                        onChange={(e) => {
-                            setName(e.target.value)
-                        }}
-                    />
-                    <Form.Control.Feedback type={"invalid"}>
-                        Please choose a god damn name....
-                    </Form.Control.Feedback>
-                </FloatingLabel>
-                <FloatingLabel as={Col} label={"Say a little something about it, would you..."}>
-                    <Form.Control 
-                        type={"textArea"} 
-                        placeholder={"The description goes here..."} 
-                        required
-                        onChange={(e) => {
-                            setDescription(e.target.value)
-                        }}                
-                    />
-                    <Form.Control.Feedback type={"invalid"}>
-                        I don't like you!
-                    </Form.Control.Feedback>
-                </FloatingLabel>
-            </Row>
-            <Row className={"mb-3"}>
-                <FloatingLabel as={Col} label={"Make it sellable!"}>
-                    <Form.Control
-                        type={"number"}
-                        step={0.5} 
-                        placeholder={"What are you selling for?"} 
-                        required
-                        onChange={(e) => {
-                            setPrice(e.target.value)
-                        }}
-                    />
-                    <Form.Control.Feedback type={"invalid"}>
-                        I recomend you see a doctor.
-                    </Form.Control.Feedback>
-                </FloatingLabel>
-            </Row>  
-            <Row>
-                <FloatingLabel as={Col} label={"Choose a time unit!"}>
-                    <Form.Select onChange={(e) => {
-                        setUnit(e.target.value)
-                    }}>
-                        {renderTimeUnits(formTimeUnits)}
-                    </Form.Select>
-                </FloatingLabel>
-                <FloatingLabel as={Col} label={"Choose a category!"}>
-                    <Form.Select onChange={(e) => {
-                        setCategory(e.target.value)
-                    }}>
-                        {renderCategories(formCategories)}
-                    </Form.Select>
-                </FloatingLabel>
-            </Row>
-            <FloatingLabel label={"Start Date"}>
-                <Form.Control 
-                    required
-                    type={"datetime-local"}  
-                    onChange={(e) => {
-                        setStartDate(e.target.value)
-                    }}
-                ></Form.Control>
-            </FloatingLabel>
-            <FloatingLabel label={"End Date"}>
-                <Form.Control
-                    required
-                    type={"datetime-local"}
-                    onChange={(e) => {
-                        setEndDate(e.target.value)
-                    }}
-                ></Form.Control>
-            </FloatingLabel>
-            <FloatingLabel label={"Where are you?"}>
-                <Form.Control
-                    required
-                    type={"text"}
-                    onChange={(e) => {
-                        setLocation(e.target.value)
-                    }}
-                    placeholder={"The description goes here..."}
-                ></Form.Control>
-            </FloatingLabel>
-            <FormImages files={files} setFiles={setFiles} />
-            <Button type="submit">
-                Submit
-            </Button>
-        </Form>
+        <div>
+            <h1 className={"mb-3 mt-5 text-center"}>Add product</h1>
+            <Form 
+                encType={"multipart/form-data"} 
+                onSubmit={uploadForm} 
+                noValidate 
+                validated={validated}
+                className={"w-50 m-auto"}
+            >
+                <Row>
+                    <Col md className={"mb-3"}>
+                        <FloatingLabel label={"What do you rent..."}>
+                            <Form.Control
+                                required
+                                type={"text"} 
+                                placeholder={"Type a name..."}
+                                onChange={(e) => {
+                                    setFormState(() => ({
+                                        ...formState,
+                                        ...{Name: e.target.value}
+                                    }))
+                                }}
+                            />
+                            <Form.Control.Feedback type={"invalid"}>
+                                Please choose a god damn name....
+                            </Form.Control.Feedback>
+                        </FloatingLabel>
+                    </Col>
+                    <Col md>
+                        <FloatingLabel label={"Make it sellable!"}>
+                            <Form.Control
+                                type={"number"}
+                                step={0.5}
+                                placeholder={"What are you selling for?"}
+                                required
+                                onChange={(e) => {
+                                    setFormState(() => ({
+                                        ...formState,
+                                        ...{Price: e.target.value}
+                                    }))
+                                }}
+                            />
+                            <Form.Control.Feedback type={"invalid"}>
+                                I recomend you see a doctor.
+                            </Form.Control.Feedback>
+                        </FloatingLabel>
+                    </Col>
+                </Row>
+                <Row className={"mb-3"}>
+                    <Col md>
+                        <FloatingLabel label={"Say a little something about it, would you..."}>
+                            <Form.Control
+                                as={"textarea"}
+                                style={{ height: '100px' }}
+                                placeholder={"The description goes here..."}
+                                required
+                                onChange={(e) => {
+                                    setFormState(() => ({
+                                        ...formState,
+                                        ...{Description: e.target.value}
+                                    }))
+                                }}
+                            />
+                            <Form.Control.Feedback type={"invalid"}>
+                                I don't like you!
+                            </Form.Control.Feedback>
+                        </FloatingLabel>
+                    </Col>
+                </Row>  
+                <Row>
+                    <Col md className={"mb-3"}>
+                        <FloatingLabel label={"Choose a time unit!"}>
+                            <Form.Select onChange={(e) => {
+                                setFormState(() => ({
+                                    ...formState,
+                                    ...{Unit: e.target.value}
+                                }))
+                            }}>
+                                {renderTimeUnits(formTimeUnits)}
+                            </Form.Select>
+                        </FloatingLabel>
+                    </Col>
+                    <Col md>
+                        <FloatingLabel label={"Choose a category!"}>
+                            <Form.Select onChange={(e) => {
+                                setFormState(() => ({
+                                    ...formState,
+                                    ...{Category: e.target.value}
+                                }))
+                            }}>
+                                {renderCategories(formCategories)}
+                            </Form.Select>
+                        </FloatingLabel>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md style={ {minWidth: "40%"} } className={"mb-3"}>
+                        <FloatingLabel label={"Start Date"} >
+                            <Form.Control 
+                                required
+                                type={"datetime-local"}  
+                                onChange={(e) => {
+                                    setFormState(() => ({
+                                        ...formState,
+                                        ...{StartDate: e.target.value}
+                                    }))
+                                    console.log(e.target.value)
+                                }}
+                            ></Form.Control>
+                        </FloatingLabel>
+                    </Col>
+                    <Col style={ {minWidth: "40%"} }>
+                        <FloatingLabel label={"End Date"}>
+                            <Form.Control
+                                required
+                                type={"datetime-local"}
+                                onChange={(e) => {
+                                    setFormState(() => ({
+                                        ...formState,
+                                        ...{EndDate: e.target.value}
+                                    }))
+                                }}
+                            ></Form.Control>
+                        </FloatingLabel>
+                    </Col>
+                </Row>
+                <Row className={"mb-3"}>
+                    <Col>
+                        <FloatingLabel label={"Where are you?"}>
+                            <Form.Control
+                                required
+                                type={"text"}
+                                onChange={(e) => {
+                                    setFormState(() => ({
+                                        ...formState,
+                                        ...{Location: e.target.value}
+                                    }))
+                                }}
+                                placeholder={"The description goes here..."}
+                            ></Form.Control>
+                        </FloatingLabel>
+                    </Col>
+                </Row>
+                <FormImages files={files} setFiles={setFiles} />
+                <Button type="submit">
+                    Submit
+                </Button>
+            </Form>
+        </div>
     )
 }
 

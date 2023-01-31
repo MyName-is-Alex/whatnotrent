@@ -1,5 +1,6 @@
 ﻿import {useEffect, useRef} from "react";
-import {Form} from "react-bootstrap";
+import {Form, Image} from "react-bootstrap";
+import {Col, Row} from "reactstrap";
 
 
 const FormImages = ({files, setFiles}) => {
@@ -13,7 +14,8 @@ const FormImages = ({files, setFiles}) => {
     }, []);
 
     function onInputChange(event) {
-        event.target.nextElementSibling.src = URL.createObjectURL(event.target.files[0]);
+        event.target.previousElementSibling.firstChild.nextSibling.src = URL.createObjectURL(event.target.files[0]);
+        event.target.previousElementSibling.firstChild.style.display = "none"
 
         const fileReader = new FileReader()
         fileReader.onload = () => {
@@ -32,30 +34,50 @@ const FormImages = ({files, setFiles}) => {
     };
     //FILE UPLOAD END
     
-    return  IMAGES.map((item, index) => (
-            <Form.Group key={index} data-index={index}>
-                <Form.Control
-                    required={index === 0}
-                    type={"file"}
-                    onChange={(e) => {
-                        onInputChange(e);
-                        saveFile(e);
-                    }}
-                    accept="image/*" 
-                    aria-required={true}
-                >
-                </Form.Control>
-                <img
-                    src={"#"}
-                    alt={"your image"}
-                    ref={el => imageContainer.current[index] = el}
-                    style={{ width: "20vw" }}
-                />
-                <Form.Control.Feedback type={"invalid"}>
-                    At least one image, no di*k pics!!!
-                </Form.Control.Feedback>
-            </Form.Group>
+    return  (<Row>{IMAGES.map((item, index) => (
+            <Col xl={4} lg={6} md={6} key={index} className={"mb-3"}> 
+                <Form.Group data-index={index}>
+                    <div
+                        className={"position-relative"}    
+                        style={{
+                        width: "100%", 
+                        aspectRatio: "1/0.8", 
+                        boxShadow:"5px 3px 15px rgba(0, 0, 0, 0.3)", 
+                        marginBottom:"5px",
+                        borderRadius: "5px"
+                    }}>
+                        <div
+                            className={"position-absolute top-50 start-50 translate-middle"}
+                        >
+                            Add image
+                        </div>
+                        <img
+                            src={"#"}
+                            alt={""}
+                            ref={el => imageContainer.current[index] = el}
+                            style={{width: "100%", marginBottom: "7px"}}
+                        />
+                    </div>
+                    <Form.Control
+                        required={index === 0}
+                        type={"file"}
+                        onChange={(e) => {
+                            onInputChange(e);
+                            saveFile(e);
+                        }}
+                        accept="image/*"
+                        aria-required={true}
+                    >
+                    </Form.Control>
+            
+                    <Form.Control.Feedback type={"invalid"}>
+                        At least one image, no di*k pics!!!
+                    </Form.Control.Feedback>
+                </Form.Group>
+            </Col>
         ))
+        }</Row>
+    )
 }
 
 export default FormImages;
