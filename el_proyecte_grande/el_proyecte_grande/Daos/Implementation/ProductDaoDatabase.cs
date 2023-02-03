@@ -35,6 +35,9 @@ public class ProductDaoDatabase : IProductDao
     public IEnumerable<Product> GetByPage(int pageNumber)
         => _context.GetCompleteProducts().Skip(pageNumber * 10).Take(10);
 
+    public IEnumerable<Product> GetByPageAndCategory(int pageNumber, int categoryId)
+        => _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId).Skip(pageNumber * 10).Take(10);
+
     public IEnumerable<Product> GetBy(ApplicationUser user)
         => _context.GetCompleteProducts().Where(x => x.User == user);
 }

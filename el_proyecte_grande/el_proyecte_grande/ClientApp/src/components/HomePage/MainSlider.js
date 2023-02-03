@@ -3,7 +3,6 @@ import firstSlide from '../../images/first_slide_carousel.jpg'
 import adSpaceImgBlack from '../../images/ad_space_img_black.png'
 import thirdSlide from '../../images/Logo/png/logo-white-third-slide.png'
 import './MainSlider.css'
-import {useEffect, useRef} from "react";
 
 function MainSlider() {
     return (

@@ -3,9 +3,11 @@ import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import {Button, Col} from "reactstrap";
 import authService from "../api-authorization/authenticationService";
-import {Navigate} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 
-const Login = ({ onChangeAuthenticated, redirectMessage }) => {
+const Login = ({ onChangeAuthenticated }) => {
+    const { isRedirected } = useParams();
+    const redirectMessage = isRedirected === "true" ? "You need an account to perform this action" : "";
     const [validated, setValidated] = useState(false);
     const [validationMessage, setValidationMessage] = useState("");
     const [userLoggedInSuccessfully, setUserLoggedInSuccessfully] = useState(false)

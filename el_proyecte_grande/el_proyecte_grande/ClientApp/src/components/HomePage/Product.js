@@ -4,7 +4,7 @@ import './Product.css'
 import {Link} from "react-router-dom";
 
 
-const Product = ({ id, title, startDate, endDate, price, unit, photo, timeUnit }) => {
+const Product = ({ id, title, startDate, endDate, price, unit, photo, timeUnit, category }) => {
     return (
         <Card 
             className={"m-2 card_container"} 
@@ -25,6 +25,7 @@ const Product = ({ id, title, startDate, endDate, price, unit, photo, timeUnit }
                     style={{ fontWeight: 'bold', fontSize: '1rem'}}
                 >{price} <span style={{ fontSize: '0.7rem' }}>RON / {timeUnit}</span></ListGroup.Item>
             </ListGroup>
+            <p>{category["name"]}</p>
             <Link to={`product-details/${title}?productId=${id}`} className="card_link" ></Link>
         </Card>
     );

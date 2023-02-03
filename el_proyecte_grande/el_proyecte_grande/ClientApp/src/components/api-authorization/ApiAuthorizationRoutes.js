@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ApplicationPaths, LoginActions, LogoutActions } from './ApiAuthorizationConstants';
+import { ApplicationPaths } from './ApiAuthorizationConstants';
 import RegisterForm from "../AuthenticationForms/RegisterForm";
 import LoginForm from "../AuthenticationForms/LoginForm";
 import Logout from "../AuthenticationForms/Logout";
@@ -11,7 +11,7 @@ const ApiAuthorizationRoutes = [
     element: <RegisterForm />
   },
   {
-    path: ApplicationPaths.Login,
+    path: `${ApplicationPaths.Login}/:isRedirected`,
     element: <LoginForm />
   },
   {

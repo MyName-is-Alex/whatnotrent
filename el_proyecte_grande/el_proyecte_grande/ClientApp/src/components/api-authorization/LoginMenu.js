@@ -13,7 +13,7 @@ const LoginMenu = ({isAuthenticated, onChangeAuthenticated}) => {
   
   if (!isAuthenticated) {
     const registerPath = `${ApplicationPaths.Register}`;
-    const loginPath = `${ApplicationPaths.Login}`;
+    const loginPath = `${ApplicationPaths.Login}/false`;
     return anonymousView(registerPath, loginPath);
   } else {
     const profilePath = `${ApplicationPaths.Profile}`;

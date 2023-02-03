@@ -21,4 +21,12 @@ public static class Extensions
             product.Photos = photoService.GetPhotosForProduct(product.Id);
         }
     }
+    
+    public static void AddPhotos(this IEnumerable<Category> categories, PhotoService photoService)
+    {
+        foreach (var category in categories)
+        {
+            category.Photos = photoService.GetPhotosForCategory(category.Id);
+        }
+    }
 }

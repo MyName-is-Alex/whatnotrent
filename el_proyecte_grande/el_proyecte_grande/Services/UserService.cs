@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Text;
 using el_proyecte_grande.Models;
+using el_proyecte_grande.Utils;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -11,18 +12,19 @@ public class UserService : IUserService
 {
     private UserManager<ApplicationUser> _userManager;
     private IConfiguration _configuration;
+    private PhotoService _photoService;
 
     public UserService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
     {
         _userManager = userManager;
         _configuration = configuration;
+        _photoService = new PhotoService();
     }
     
     public async Task<UserManagerResponse> RegisterUserAsync(RegisterUserModel userModel)
     {
         if (userModel == null)
             throw new NullReferenceException();
-
         if (userModel.Password != userModel.ConfirmPassword)
         {
             return new UserManagerResponse
@@ -32,10 +34,20 @@ public class UserService : IUserService
             };
         }
 
+        if (_userManager.Users.Select(x => x.PhoneNumber).Contains(userModel.PhoneNumber))
+        {
+            return new UserManagerResponse
+            {
+                Message = "This phone number is already in use.",
+                IsSuccess = false
+            };
+        }
+        
         var identityUser = new ApplicationUser
         {
             Email = userModel.Email,
-            UserName = userModel.Email
+            UserName = userModel.UserName,
+            PhoneNumber = userModel.PhoneNumber
         };
         var result = await _userManager.CreateAsync(identityUser, userModel.Password);
 
@@ -101,4 +113,37 @@ public class UserService : IUserService
             ExpireDate = token.ValidTo
         };
     }
+    public async Task<UserManagerResponse> UpdateUserAsync(UpdateUserModel newUserInfo, ClaimsPrincipal user)
+    {
+        var appUser = await UserInfoRetriever.GetAppUser(user, _userManager);
+        
+        if (newUserInfo.Image != null)
+        {
+            _photoService.UploadPhotoForUser(newUserInfo.Image, appUser.Id);
+        }
+        if (newUserInfo.Email != null)
+            appUser.Email = newUserInfo.Email;
+        if (newUserInfo.UserName != null)
+            appUser.UserName = newUserInfo.UserName;
+        if (newUserInfo.PhoneNumber != null)
+            appUser.PhoneNumber = newUserInfo.PhoneNumber;
+
+        var result = await _userManager.UpdateAsync(appUser);
+        
+        if (result.Succeeded)
+        {
+            return new UserManagerResponse
+            {
+                Message = "User Updated Successfully." + newUserInfo.UserName,
+                IsSuccess = true
+            };
+        }
+
+        return new UserManagerResponse
+        {
+            Message = "User did not update.",
+            IsSuccess = false,
+            Errors = result.Errors.Select(x => x.Description)
+        };
+    } 
 }

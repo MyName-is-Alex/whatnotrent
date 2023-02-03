@@ -2,6 +2,8 @@
 import authenticationService from "./authenticationService";
 import Loading from "../Loading";
 import Login from "../AuthenticationForms/LoginForm";
+import {Navigate} from "react-router-dom";
+import {ApplicationPaths} from "./ApiAuthorizationConstants";
 
 
 const AuthorizeRoute = ({ element }) => {
@@ -14,7 +16,7 @@ const AuthorizeRoute = ({ element }) => {
     if (!ready) {
         return <Loading />
     }
-    return authenticated ? element : <Login redirectMessage={"You need to be logged in to access this page."} />
+    return authenticated ? element : <Navigate replace={true} to={`/${ApplicationPaths.Login}/true`} />
 }
 
 const populateAuthorizationState = (setReady, setAuthenticated) => {

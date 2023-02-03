@@ -32,7 +32,18 @@
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     </ItemGroup>
     <ItemGroup>
+      <Folder Include="ClientApp\public\CategoriesImages\1" />
+      <Folder Include="ClientApp\public\CategoriesImages\2" />
+      <Folder Include="ClientApp\public\CategoriesImages\3" />
+      <Folder Include="ClientApp\public\CategoriesImages\4" />
+      <Folder Include="ClientApp\public\CategoriesImages\5" />
+      <Folder Include="ClientApp\public\CategoriesImages\6" />
+      <Folder Include="ClientApp\public\CategoriesImages\7" />
+      <Folder Include="ClientApp\public\CategoriesImages\8" />
+      <Folder Include="ClientApp\public\CategoriesImages\9" />
       <Folder Include="ClientApp\public\ProductsImages" />
+      <Folder Include="ClientApp\public\UsersImages" />
+      <Folder Include="ClientApp\src\components\UserPage" />
       <Folder Include="ClientApp\src\images\usersImages" />
     </ItemGroup>
     <ItemGroup>

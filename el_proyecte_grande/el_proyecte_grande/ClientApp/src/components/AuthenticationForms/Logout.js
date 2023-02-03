@@ -9,7 +9,7 @@ const Logout = ({ onChangeAuthenticated }) => {
         onChangeAuthenticated(false)
     }, [])
     return (
-        <Navigate replace={true} to={`/${ApplicationPaths.Login}`} />
+        <Navigate replace={true} to={`/${ApplicationPaths.Login}/false`} />
     )    
 }
 

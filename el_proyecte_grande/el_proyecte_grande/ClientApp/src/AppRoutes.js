@@ -1,5 +1,5 @@
-import ApiAuthorzationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
-import { Home } from "./components/Home"; 
+import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
+import Home from "./components/Home"; 
 import ProductDetails from "./components/ProductPage/ProductDetails";
 import AddProduct from "./components/AddProduct/AddProduct";
 
@@ -18,7 +18,7 @@ const AppRoutes = [
     element: <AddProduct />,
     requireAuth: true
   },
-  ...ApiAuthorzationRoutes
+  ...ApiAuthorizationRoutes
 ];
 
 export default AppRoutes;

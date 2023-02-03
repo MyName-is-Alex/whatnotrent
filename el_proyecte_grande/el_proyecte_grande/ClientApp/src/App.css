@@ -1,0 +1,5 @@
+﻿@font-face {
+    font-family: "Geomanist";   /*Can be any text*/
+    src: local("AirbnbCerealMedium"),
+    url("fonts/geomanist-regular-webfont.ttf") format("truetype");
+}

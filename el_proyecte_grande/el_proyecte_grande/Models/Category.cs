@@ -12,5 +12,5 @@ public class Category
     [JsonIgnore]
     public List<Product> Products { get; set; }
     [NotMapped]
-    public Photo? Photos { get; set; }
+    public CategoryPhoto? Photos { get; set; }
 }

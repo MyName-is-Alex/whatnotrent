@@ -1,6 +1,8 @@
 ﻿using el_proyecte_grande.Models;
 using el_proyecte_grande.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace el_proyecte_grande.Controllers;
 
@@ -46,5 +48,24 @@ public class AuthenticationController : ControllerBase
             return BadRequest(result);
         }
         return BadRequest("Some properties are not valid.");
+    }
+
+    [Authorize]
+    [HttpPost]
+    [Route("update")]
+    public async Task<IActionResult> UpdateAsync([FromForm] UpdateUserModel newInfoModel)
+    {
+        if (ModelState.IsValid)
+        {
+            var result = await _userService.UpdateUserAsync(newInfoModel, User);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        return BadRequest("Some properties are not valid");
     }
 }

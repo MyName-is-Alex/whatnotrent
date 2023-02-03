@@ -29,12 +29,10 @@ public class ProductController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpGet("infinite/{pageNumber}")]
-    public IActionResult GetAll(int pageNumber)
+    [HttpGet("infinite/{pageNumber}/{categoryId}")]
+    public IActionResult GetAll(int pageNumber, int categoryId)
     {
-        var products = _productService.GetPageProducts(pageNumber);
-        products.AddPhotos(_photoService);
-        
+        var products = _productService.GetPageProducts(pageNumber, categoryId);
         return Ok(products);
     }
     
@@ -60,9 +58,7 @@ public class ProductController : ControllerBase
     [HttpPost("add-product")]
     public async Task<IActionResult> AddProduct([FromForm] UploadProductForm file)
     {
-        var claim = User.Identity as ClaimsIdentity;
-        var userId = claim?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await UserInfoRetriever.GetAppUser(User, _userManager);
 
         var category = _categoryService.GetCategoryById(file.CategoryId);
         var productId = _productService.AddProduct(file, category, user);
