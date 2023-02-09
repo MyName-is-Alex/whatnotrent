@@ -24,10 +24,10 @@ public class ProductService
         return productDao.GetAll();    
     }
 
-    public IEnumerable<Product> GetPageProducts(int pageNumber, int categoryId)
+    public IEnumerable<Product> GetPageProducts(int pageNumber, int categoryId, SortByEnum sortBy, SortDirectionEnum sortDirection)
     {
         int allCategoryId = 1003;
-        IEnumerable<Product> products = categoryId != allCategoryId ? productDao.GetByPageAndCategory(pageNumber, categoryId) 
+        IEnumerable<Product> products = categoryId != allCategoryId ? productDao.GetByPageAndCategory(pageNumber, categoryId, sortBy, sortDirection) 
             : productDao.GetByPage(pageNumber);
 
         products.AddPhotos(_photoService);

@@ -26,7 +26,7 @@ const Product = ({ id, title, startDate, endDate, price, unit, photo, timeUnit, 
                 >{price} <span style={{ fontSize: '0.7rem' }}>RON / {timeUnit}</span></ListGroup.Item>
             </ListGroup>
             <p>{category["name"]}</p>
-            <Link to={`product-details/${title}?productId=${id}`} className="card_link" ></Link>
+            <Link to={`/product-details/${title}?productId=${id}`} className="card_link" ></Link>
         </Card>
     );
 }

@@ -4,6 +4,7 @@ import { ApplicationPaths } from './ApiAuthorizationConstants';
 import RegisterForm from "../AuthenticationForms/RegisterForm";
 import LoginForm from "../AuthenticationForms/LoginForm";
 import Logout from "../AuthenticationForms/Logout";
+import ProfilePage from "../UserPage/ProfilePage";
 
 const ApiAuthorizationRoutes = [
   {
@@ -18,6 +19,10 @@ const ApiAuthorizationRoutes = [
     path: ApplicationPaths.Logout,
     element: <Logout />
   },
+  { 
+    path: ApplicationPaths.Profile,
+    element: <ProfilePage />
+  }
 ];
 
 export default ApiAuthorizationRoutes;

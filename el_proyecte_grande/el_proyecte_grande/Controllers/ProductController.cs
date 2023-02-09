@@ -29,10 +29,10 @@ public class ProductController : ControllerBase
     }
     
     [AllowAnonymous]
-    [HttpGet("infinite/{pageNumber}/{categoryId}")]
-    public IActionResult GetAll(int pageNumber, int categoryId)
+    [HttpGet("infinite/{pageNumber}/{categoryId}/{sortBy}/{sortDirection}")]
+    public IActionResult GetAll(int pageNumber, int categoryId, SortByEnum sortBy, SortDirectionEnum sortDirection)
     {
-        var products = _productService.GetPageProducts(pageNumber, categoryId);
+        var products = _productService.GetPageProducts(pageNumber, categoryId, sortBy, sortDirection);
         return Ok(products);
     }
     

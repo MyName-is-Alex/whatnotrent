@@ -68,4 +68,13 @@ public class AuthenticationController : ControllerBase
 
         return BadRequest("Some properties are not valid");
     }
+
+    [Authorize]
+    [HttpGet]
+    [Route("user-info")]
+    public async Task<IActionResult> GetUserInfo()
+    {
+        var result = await _userService.GetUserInfoAsync(User);
+        return Ok(result);
+    }
 }

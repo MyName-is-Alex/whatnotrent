@@ -76,4 +76,10 @@ public class PhotoService
             image.CopyTo(stream);
         }
     }
+
+    public string GetPhotoForUser(string userId)
+    {
+        var fileStream = new DirectoryInfo($"./ClientApp/public/UsersImages/{userId}");
+        return fileStream.GetFiles()[0].Name;
+    } 
 }

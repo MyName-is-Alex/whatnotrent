@@ -33,11 +33,71 @@ public class ProductDaoDatabase : IProductDao
         => _context.GetCompleteProducts().AsQueryable();
 
     public IEnumerable<Product> GetByPage(int pageNumber)
-        => _context.GetCompleteProducts().Skip(pageNumber * 10).Take(10);
+    {
+        return _context.GetCompleteProducts().Skip(pageNumber * 10).Take(10);
+    }
 
-    public IEnumerable<Product> GetByPageAndCategory(int pageNumber, int categoryId)
-        => _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId).Skip(pageNumber * 10).Take(10);
+    public IEnumerable<Product> GetByPageAndCategory(int pageNumber, int categoryId, SortByEnum sortBy,
+        SortDirectionEnum sortDirection)
+    {
+        switch (sortBy)
+        {
+            case SortByEnum.Nothing:
+                return _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId).Skip(pageNumber * 10).Take(10);
+            case SortByEnum.Name:
+                if (sortDirection == SortDirectionEnum.Descending)
+                {
+                    return _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId)
+                        .OrderByDescending(x => x.Name).Skip(pageNumber * 10).Take(10);
+                }
+                return _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId)
+                    .OrderBy(x => x.Name).Skip(pageNumber * 10).Take(10);
+            case SortByEnum.Date:
+                if (sortDirection == SortDirectionEnum.Descending)
+                {
+                    return _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId)
+                        .OrderByDescending(x => x.StartDate).Skip(pageNumber * 10).Take(10);
+                }
+                return _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId)
+                    .OrderBy(x => x.StartDate).Skip(pageNumber * 10).Take(10);
+            case SortByEnum.Price:
+                if (sortDirection == SortDirectionEnum.Descending)
+                {
+                    return _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId).AsEnumerable()
+                        .OrderByDescending(x =>
+                            {
+                                return x.Price / RentingHours(x.Unit);
+                            }
+                            ).Skip(pageNumber * 10).Take(10);
+                }
+                return _context.GetCompleteProducts().Where(x => x.Category.Id == categoryId).AsEnumerable()
+                    .OrderBy(x =>
+                    {
+                        return x.Price / RentingHours(x.Unit);
+                        
+                    }).Skip(pageNumber * 10).Take(10);
+            default: 
+                throw new ArgumentException();
+        }
+    }
 
     public IEnumerable<Product> GetBy(ApplicationUser user)
         => _context.GetCompleteProducts().Where(x => x.User == user);
+
+    private int RentingHours(TimeUnit unit)
+    {
+        switch (unit)
+        {
+            case TimeUnit.Hour:
+                return 1;
+            case TimeUnit.Day:
+                return 24;
+            case TimeUnit.Month:
+                return 720;
+            case TimeUnit.Year:
+                return 8772;
+            default: 
+                throw new ArgumentException();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using el_proyecte_grande.Daos;
 using el_proyecte_grande.Models;
 using el_proyecte_grande.Utils;
 using Microsoft.AspNetCore.Identity;
@@ -13,12 +14,14 @@ public class UserService : IUserService
     private UserManager<ApplicationUser> _userManager;
     private IConfiguration _configuration;
     private PhotoService _photoService;
+    private IProductDao _productDao;
 
-    public UserService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+    public UserService(UserManager<ApplicationUser> userManager, IConfiguration configuration, IProductDao productDao)
     {
         _userManager = userManager;
         _configuration = configuration;
         _photoService = new PhotoService();
+        _productDao = productDao;
     }
     
     public async Task<UserManagerResponse> RegisterUserAsync(RegisterUserModel userModel)
@@ -113,6 +116,7 @@ public class UserService : IUserService
             ExpireDate = token.ValidTo
         };
     }
+    
     public async Task<UserManagerResponse> UpdateUserAsync(UpdateUserModel newUserInfo, ClaimsPrincipal user)
     {
         var appUser = await UserInfoRetriever.GetAppUser(user, _userManager);
@@ -145,5 +149,23 @@ public class UserService : IUserService
             IsSuccess = false,
             Errors = result.Errors.Select(x => x.Description)
         };
-    } 
+    }
+
+    public async Task<UserModel> GetUserInfoAsync(ClaimsPrincipal user)
+    {
+        var appUser = await UserInfoRetriever.GetAppUser(user, _userManager);
+        var products = _productDao.GetBy(appUser);
+        products.AddPhotos(_photoService);
+        var result = new UserModel
+        {
+            Email = appUser.Email,
+            UserName = appUser.UserName,
+            UserId = appUser.Id,
+            PhoneNumber = appUser.PhoneNumber,
+            PhotoUrl = _photoService.GetPhotoForUser(appUser.Id),
+            Products = products
+        };
+
+        return result;
+    }
 }

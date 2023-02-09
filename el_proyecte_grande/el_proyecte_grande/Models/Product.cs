@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 using el_proyecte_grande.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace el_proyecte_grande.Models;
 
@@ -17,7 +18,6 @@ public class Product
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public string Location { get; set; }
-    
     public Category Category { get; set; }
     public ApplicationUser User { get; set; }
     [NotMapped]

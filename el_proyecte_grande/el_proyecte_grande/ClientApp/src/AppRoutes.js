@@ -2,6 +2,7 @@ import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizat
 import Home from "./components/Home"; 
 import ProductDetails from "./components/ProductPage/ProductDetails";
 import AddProduct from "./components/AddProduct/AddProduct";
+import EditProfile from "./components/UserPage/EditProfile";
 
 const AppRoutes = [
   {
@@ -16,6 +17,11 @@ const AppRoutes = [
   {
     path: '/add-product',
     element: <AddProduct />,
+    requireAuth: true
+  },
+  {
+    path: '/update-user',
+    element: <EditProfile />,
     requireAuth: true
   },
   ...ApiAuthorizationRoutes

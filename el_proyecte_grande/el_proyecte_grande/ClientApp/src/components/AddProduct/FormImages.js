@@ -42,8 +42,8 @@ const FormImages = ({files, setFiles}) => {
                         style={{
                         width: "100%", 
                         aspectRatio: "1/0.8", 
-                        boxShadow:"5px 3px 15px rgba(0, 0, 0, 0.3)", 
-                        marginBottom:"5px",
+                        boxShadow: "5px 3px 15px rgba(0, 0, 0, 0.3)", 
+                        marginBottom: "5px",
                         borderRadius: "5px"
                     }}>
                         <div

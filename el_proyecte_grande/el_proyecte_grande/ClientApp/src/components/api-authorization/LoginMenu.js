@@ -9,7 +9,7 @@ const LoginMenu = ({isAuthenticated, onChangeAuthenticated}) => {
   
   useEffect(() => {
     populateState(onChangeAuthenticated, setUserName)
-  }, [isAuthenticated])
+  }, [])
   
   if (!isAuthenticated) {
     const registerPath = `${ApplicationPaths.Register}`;

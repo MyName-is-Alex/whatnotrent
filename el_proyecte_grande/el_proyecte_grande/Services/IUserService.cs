@@ -10,4 +10,5 @@ public interface IUserService
     public Task<UserManagerResponse> RegisterUserAsync(RegisterUserModel userModel);
     public Task<UserManagerResponse> LoginUserAsync(LoginUserModel userModel);
     public Task<UserManagerResponse> UpdateUserAsync(UpdateUserModel newUserInfo, ClaimsPrincipal user);
+    public Task<UserModel> GetUserInfoAsync(ClaimsPrincipal user);
 }

@@ -16,12 +16,12 @@ export const LoginActions = {
 
 const prefix = 'authentication';
 
-export const ApplicationPaths = {
+export const  ApplicationPaths = {
   DefaultLoginRedirectPath: '/',
   Login: `${prefix}/${LoginActions.Login}/form`,
   Register: `${prefix}/${LoginActions.Register}/form`,
   Logout: `${prefix}/${LogoutActions.Logout}`,
-  Profile: "#"
+  Profile: `profile`
   /*LoginFailed: `${prefix}/${LoginActions.LoginFailed}`,*/
   /*LoginCallback: `${prefix}/${LoginActions.LoginCallback}`,*/
   /*Profile: `${prefix}/${LoginActions.Profile}`,*/
