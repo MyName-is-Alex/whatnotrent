@@ -8,7 +8,6 @@ const Category = ({ setCategory, category }) => {
     
     const onClick = (event) => {
         setCategory(event.currentTarget.value)
-        return <Products />
     }
     
     return (

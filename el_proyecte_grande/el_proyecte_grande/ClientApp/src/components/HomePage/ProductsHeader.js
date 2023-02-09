@@ -1,8 +1,12 @@
 ﻿import Nav from 'react-bootstrap/Nav';
 import {useRef, useState} from "react";
 import Categories from "../UtilityComponents/Categories";
+import SortBy from "../UtilityComponents/SortByComponent";
+import loginForm from "../AuthenticationForms/LoginForm";
 
-const ProductsHeader = ({ setCategory, formCategories }) => {
+const ProductsHeader = ({ setCategory, formCategories, setSortBy, 
+                            setSortDirection, sortByEnum, sortDirectionEnum, 
+                            category, sortBy, sortDirection }) => {
     
     const [content, setContent] = useState();
     const [hidden, setHidden] = useState(true);
@@ -31,7 +35,9 @@ const ProductsHeader = ({ setCategory, formCategories }) => {
                 setHidden(false)
                 break;
             case "sort":
-                setContent("bbbb");
+                setContent(<SortBy category={category} setSortBy={setSortBy} setSortDirection={setSortDirection} 
+                                   sortByEnum={sortByEnum} sortDirectionEnum={sortDirectionEnum} sortBy={sortBy} 
+                                   sortDirection={sortDirection} />);
                 setHidden(false)
                 break;
             case "hide":

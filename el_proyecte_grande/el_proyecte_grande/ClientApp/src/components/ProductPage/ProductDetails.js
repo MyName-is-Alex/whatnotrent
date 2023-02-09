@@ -7,8 +7,6 @@ import '@splidejs/splide/css/sea-green';
 import './ProductDetails.css';
 import authHeader from "../api-authorization/authHeader";
 import axios from "axios";
-import Products from "../HomePage/Products";
-import ProductsHeader from "../HomePage/ProductsHeader";
 
 const ProductDetails = () => {
     const [searchParams, setSearchParams] = useSearchParams()

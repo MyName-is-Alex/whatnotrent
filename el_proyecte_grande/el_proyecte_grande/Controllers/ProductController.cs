@@ -51,8 +51,11 @@ public class ProductController : ControllerBase
         var categories = _categoryService.GetAllCategories();
         var timeUnits = Enum.GetValues(typeof(TimeUnit)).Cast<TimeUnit>()
             .ToDictionary(t => (int)t, t => t.ToString());
+        var sortBy = Enum.GetValues(typeof(SortByEnum)).Cast<SortByEnum>().ToDictionary(s => (int)s, s => s.ToString());
+        var sortDirection = Enum.GetValues(typeof(SortDirectionEnum)).Cast<SortDirectionEnum>()
+            .ToDictionary(s => (int)s, s => s.ToString());
         
-        return Ok(new { categories, timeUnits });
+        return Ok(new { categories, timeUnits, sortBy, sortDirection });
     }
     
     [HttpPost("add-product")]

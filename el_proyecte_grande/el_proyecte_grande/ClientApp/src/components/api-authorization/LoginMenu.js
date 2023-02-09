@@ -1,4 +1,4 @@
-import React, {Component, Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import { NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { ApplicationPaths } from './ApiAuthorizationConstants';
@@ -9,7 +9,7 @@ const LoginMenu = ({isAuthenticated, onChangeAuthenticated}) => {
   
   useEffect(() => {
     populateState(onChangeAuthenticated, setUserName)
-  }, [])
+  }, [isAuthenticated])
   
   if (!isAuthenticated) {
     const registerPath = `${ApplicationPaths.Register}`;

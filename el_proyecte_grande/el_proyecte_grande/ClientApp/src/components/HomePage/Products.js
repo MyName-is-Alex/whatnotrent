@@ -5,7 +5,7 @@ import authHeader from "../api-authorization/authHeader";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const Products = ({ categoryFilter, formTimeUnits, formCategories }) => {
+const Products = ({ categoryFilter, formTimeUnits, formCategories, sortByFilter, sortDirection }) => {
     const [page, setPage] = useState(0)
     const [productList, setProductList] = useState([]);
     const [hasMore, setHasMore] = useState(true);
@@ -14,17 +14,17 @@ const Products = ({ categoryFilter, formTimeUnits, formCategories }) => {
         setProductList([])
         setHasMore(true)
         setPage(0)
-    }, [categoryFilter])
+    }, [categoryFilter, sortByFilter, sortDirection])
     
     return (
         productList.loading
         ? <Loading />
-        : renderProductsComponent(productList, setProductList, page, setPage, formTimeUnits, formCategories, hasMore, setHasMore, categoryFilter)
+        : renderProductsComponent(productList, setProductList, page, setPage, formTimeUnits, formCategories, hasMore, setHasMore, categoryFilter, sortByFilter, sortDirection)
     );
 }
 
-const fetchPage = async (page, setPage, productList, setProductList, setHasMore, categoryFilter) => {
-    const response = await axios.get(`api/product/infinite/${page}/${categoryFilter}`, authHeader());
+const fetchPage = async (page, setPage, productList, setProductList, setHasMore, categoryFilter, sortByFilter, sortDirection) => {
+    const response = await axios.get(`api/product/infinite/${page}/${categoryFilter}/${sortByFilter}/${sortDirection}`, authHeader());
     const result = await response["data"];
     if (result.length === 0) {
         setHasMore(false)
@@ -35,7 +35,7 @@ const fetchPage = async (page, setPage, productList, setProductList, setHasMore,
     setPage(page + 1)
 }
 
-const renderProductsComponent = (productList, setProductList, page, setPage, formTimeUnits, formCategories, hasMore, setHasMore, categoryFilter) => {
+const renderProductsComponent = (productList, setProductList, page, setPage, formTimeUnits, formCategories, hasMore, setHasMore, categoryFilter, sortByFilter, sortDirection) => {
     return (
         <>
             <h1 
@@ -43,7 +43,7 @@ const renderProductsComponent = (productList, setProductList, page, setPage, for
                 style={{ fontSize:"32px" }}
             >Anunturi</h1>
             <InfiniteScroll
-                next={() => fetchPage(page, setPage, productList, setProductList, setHasMore, categoryFilter)} 
+                next={() => fetchPage(page, setPage, productList, setProductList, setHasMore, categoryFilter, sortByFilter, sortDirection)} 
                 hasMore={hasMore} 
                 loader={<Loading />}
                 dataLength={() => productList.length}
