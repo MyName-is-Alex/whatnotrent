@@ -25,8 +25,7 @@ const SortByComponent = ({ setSortBy, setSortDirection, sortByEnum, sortDirectio
                         enumKey={key}
                     />
                 </Col>
-            ))}     
-            <p>{sortBy}</p>
+            ))}
         </Row>
     )
 }

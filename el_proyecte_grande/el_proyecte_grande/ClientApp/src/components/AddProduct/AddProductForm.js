@@ -1,4 +1,4 @@
-﻿import {FloatingLabel, Form} from "react-bootstrap";
+﻿import {FloatingLabel, Form, InputGroup} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {Button, Col, Row} from "reactstrap";
 import axios from "axios";
@@ -98,7 +98,7 @@ const AddProductForm = ({ setIsCompleted, setBugFree }) => {
                         </FloatingLabel>
                     </Col>
                     <Col md>
-                        <FloatingLabel label={"Make it sellable!"}>
+                        <InputGroup className={"mt-2"}>
                             <Form.Control
                                 type={"number"}
                                 step={0.5}
@@ -111,10 +111,13 @@ const AddProductForm = ({ setIsCompleted, setBugFree }) => {
                                     }))
                                 }}
                             />
+                            <InputGroup.Text>
+                                RON
+                            </InputGroup.Text>
                             <Form.Control.Feedback type={"invalid"}>
                                 I recomend you see a doctor.
                             </Form.Control.Feedback>
-                        </FloatingLabel>
+                        </InputGroup>
                     </Col>
                 </Row>
                 <Row className={"mb-3"}>
@@ -175,7 +178,6 @@ const AddProductForm = ({ setIsCompleted, setBugFree }) => {
                                         ...formState,
                                         ...{StartDate: e.target.value}
                                     }))
-                                    console.log(e.target.value)
                                 }}
                             ></Form.Control>
                         </FloatingLabel>
@@ -213,9 +215,11 @@ const AddProductForm = ({ setIsCompleted, setBugFree }) => {
                     </Col>
                 </Row>
                 <FormImages files={files} setFiles={setFiles} />
-                <Button type="submit">
-                    Submit
-                </Button>
+                <div className={"text-center"}>
+                    <Button type="submit" className={"bg-primary w-50 fw-bold mb-5"}>
+                        Add Product
+                    </Button>
+                </div>
             </Form>
         </div>
     )

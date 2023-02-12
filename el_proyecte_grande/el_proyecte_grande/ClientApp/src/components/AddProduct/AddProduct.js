@@ -2,6 +2,7 @@
 import AddProductForm from "./AddProductForm";
 import {Navigate} from "react-router-dom";
 import ErrorPage from "../ErrorPage";
+import AddedProductMessage from "./AddedProductMessage";
 
 
 const AddProduct = () => {
@@ -12,7 +13,7 @@ const AddProduct = () => {
         return <ErrorPage redirectUrl={"/add-product"} setBugFree={setBugFree} />
     }
         
-    return !isCompleted ? <AddProductForm setIsCompleted={setIsCompleted} setBugFree={setBugFree} /> : <Navigate replace={true} to={"/"} />
+    return !isCompleted ? <AddProductForm setIsCompleted={setIsCompleted} setBugFree={setBugFree} /> : <AddedProductMessage />
 }
 
 export default AddProduct;

@@ -21,16 +21,16 @@ const NavMenu = ({ isAuthenticated, onChangeAuthenticated}) => {
                   style={{width: "100px", borderRadius: "10px"}}
                   alt="Whatnot Rent"
                   src={logo}/>
-              <span className={"mx-3 align-self-center"}>Why Not Rent?</span>
+              <span className={"mx-3 align-self-center fw-bold"}>Why Not Rent?</span>
             </NavbarBrand>
             <NavbarToggler onClick={toggleNavbar} className="mr-2" />
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={collapsed} navbar>
               <ul className="navbar-nav flex-grow">
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
+                  <NavLink tag={Link} className="text-dark fw-bold" to="/">Home</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink tag={Link} className="text-dark" to="/add-product">Rent it!</NavLink>
+                  <NavLink tag={Link} className="text-dark fw-bold" to="/add-product">Rent it!</NavLink>
                 </NavItem>
                 <LoginMenu isAuthenticated={isAuthenticated} onChangeAuthenticated={onChangeAuthenticated} />
               </ul>

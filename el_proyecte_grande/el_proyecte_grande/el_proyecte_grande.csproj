@@ -42,6 +42,7 @@
       <Folder Include="ClientApp\public\CategoriesImages\8" />
       <Folder Include="ClientApp\public\CategoriesImages\9" />
       <Folder Include="ClientApp\public\ProductsImages" />
+      <Folder Include="ClientApp\public\UsersImages" />
       <Folder Include="ClientApp\src\images\usersImages" />
     </ItemGroup>
     <ItemGroup>

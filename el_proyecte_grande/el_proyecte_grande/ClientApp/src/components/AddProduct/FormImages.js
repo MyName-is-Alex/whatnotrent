@@ -40,12 +40,14 @@ const FormImages = ({files, setFiles}) => {
                     <div
                         className={"position-relative"}    
                         style={{
-                        width: "100%", 
-                        aspectRatio: "1/0.8", 
-                        boxShadow: "5px 3px 15px rgba(0, 0, 0, 0.3)", 
-                        marginBottom: "5px",
-                        borderRadius: "5px"
-                    }}>
+                            width: "100%",
+                            aspectRatio: "1/0.8", 
+                            boxShadow: "5px 3px 15px rgba(0, 0, 0, 0.3)", 
+                            marginBottom: "5px",
+                            borderRadius: "5px",
+                            overflow: "hidden"
+                        }}
+                    >
                         <div
                             className={"position-absolute top-50 start-50 translate-middle"}
                         >
@@ -55,7 +57,8 @@ const FormImages = ({files, setFiles}) => {
                             src={"#"}
                             alt={""}
                             ref={el => imageContainer.current[index] = el}
-                            style={{width: "100%", marginBottom: "7px"}}
+                            style={{width: "100%", position: "relative", top: "50%", right: "50%", 
+                                transform: "translate(50%, -50%)", overflow: "hidden"}}
                         />
                     </div>
                     <Form.Control

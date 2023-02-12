@@ -35,6 +35,16 @@ public class ProductController : ControllerBase
         var products = _productService.GetPageProducts(pageNumber, categoryId, sortBy, sortDirection);
         return Ok(products);
     }
+
+    [AllowAnonymous]
+    [HttpGet]
+    [Route("infinite/{pageNumber}/{categoryId}/{sortBy}/{sortDirection}/{searchStr}")]
+    public IActionResult SearchProducts(int pageNumber, int categoryId, SortByEnum sortBy,
+        SortDirectionEnum sortDirection, string searchStr)
+    {
+        var products = _productService.SearchProducts(pageNumber, categoryId, sortBy, sortDirection, searchStr);
+        return Ok(products);
+    }
     
     [HttpGet("{productId}")]
     public IActionResult Get(int productId)

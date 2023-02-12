@@ -4,6 +4,9 @@ import ProductsHeader from './HomePage/ProductsHeader'
 import Products from './HomePage/Products'
 import axios from "axios";
 import authHeader from "./api-authorization/authHeader";
+import SearchBar from "./HomePage/SearchBar";
+import {Image} from "react-bootstrap";
+import {Parallax, ParallaxProvider} from "react-scroll-parallax";
 
 const Home = () => {
     const ALL_CATEGORY_ID = "1003"
@@ -20,12 +23,31 @@ const Home = () => {
         })
     }, [])
     
-    const [category, setCategory] = useState(ALL_CATEGORY_ID)
-    const [sortBy, setSortBy] = useState("0")
-    const [sortDirection, setSortDirection] = useState("0")
+    const [category, setCategory] = useState(ALL_CATEGORY_ID);
+    const [sortBy, setSortBy] = useState("0");
+    const [sortDirection, setSortDirection] = useState("0");
+    const [searchStr, setSearchStr] = useState("");
     
     return (
         <div>
+            <ParallaxProvider>
+                <Parallax 
+                    speed={-20} 
+                    className={"w-100 text-center"}
+                    style={{ 
+                        position: "absolute", 
+                        top: "-110px",
+                        zIndex: "-20"
+                    }}
+                >
+                    <Image 
+                        src={"home-page-header.png"} 
+                        alt={""}
+                        style={{ maxHeight: "28vw" }}
+                    />
+                </Parallax>
+            </ParallaxProvider>
+            <SearchBar setSearchStr={setSearchStr} />
             <MainSlider />
             <ProductsHeader 
                 setCategory={setCategory}
@@ -44,6 +66,7 @@ const Home = () => {
                 categoryFilter={category} 
                 formTimeUnits={formTimeUnits} 
                 formCategories={formCategories}
+                searchStr={searchStr}
             />
         </div>
     );

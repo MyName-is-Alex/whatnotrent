@@ -9,14 +9,14 @@
     top: 0;
     left: 0;
 }
-.group_item {
+/*.group_item {
     padding: 5px 15px;
     font-size: 0.9rem;
 }
 .card_body {
     padding: 15px 15px 0 15px; 
     max-height: 12%;
-    /*text-align: center;*/
+    !*text-align: center;*!
 }
 .card_img_container {
     height: 50%;
@@ -31,4 +31,4 @@
 .card_container {
     width: 18rem;
     height: 23rem;
-}
+}*/

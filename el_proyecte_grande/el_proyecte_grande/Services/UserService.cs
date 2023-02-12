@@ -65,7 +65,7 @@ public class UserService : IUserService
 
         return new UserManagerResponse
         {
-            Message = "User did not create.",
+            Message = "This email is already in use.",
             IsSuccess = false,
             Errors = result.Errors.Select(x => x.Description)
         };

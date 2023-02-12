@@ -4,11 +4,18 @@ import Loading from '../Loading'
 import authHeader from "../api-authorization/authHeader";
 import axios from "axios";
 import InfiniteScroll from "react-infinite-scroll-component";
+import {Row} from "reactstrap";
 
-const Products = ({ categoryFilter, formTimeUnits, formCategories, sortByFilter, sortDirection }) => {
+const Products = ({ categoryFilter, formTimeUnits, formCategories, sortByFilter, sortDirection, searchStr }) => {
     const [page, setPage] = useState(0)
     const [productList, setProductList] = useState([]);
     const [hasMore, setHasMore] = useState(true);
+    
+    useEffect(() => {
+        setProductList([])
+        setHasMore(true)
+        setPage(0)
+    }, [searchStr])
     
     useEffect(() => {
         setProductList([])
@@ -19,12 +26,18 @@ const Products = ({ categoryFilter, formTimeUnits, formCategories, sortByFilter,
     return (
         productList.loading
         ? <Loading />
-        : renderProductsComponent(productList, setProductList, page, setPage, formTimeUnits, formCategories, hasMore, setHasMore, categoryFilter, sortByFilter, sortDirection)
+        : renderProductsComponent(productList, setProductList, page, setPage, formTimeUnits, formCategories, hasMore,
+                setHasMore, categoryFilter, sortByFilter, sortDirection, searchStr)
     );
 }
 
-const fetchPage = async (page, setPage, productList, setProductList, setHasMore, categoryFilter, sortByFilter, sortDirection) => {
-    const response = await axios.get(`api/product/infinite/${page}/${categoryFilter}/${sortByFilter}/${sortDirection}`, authHeader());
+const fetchPage = async (page, setPage, productList, setProductList, setHasMore, categoryFilter, sortByFilter, 
+                         sortDirection, searchStr) => {
+    const apiRoute = searchStr 
+        ? `api/product/infinite/${page}/${categoryFilter}/${sortByFilter}/${sortDirection}/${searchStr}`
+        : `api/product/infinite/${page}/${categoryFilter}/${sortByFilter}/${sortDirection}`
+    
+    const response = await axios.get(apiRoute, authHeader());
     const result = await response["data"];
     if (result.length === 0) {
         setHasMore(false)
@@ -35,7 +48,8 @@ const fetchPage = async (page, setPage, productList, setProductList, setHasMore,
     setPage(page + 1)
 }
 
-const renderProductsComponent = (productList, setProductList, page, setPage, formTimeUnits, formCategories, hasMore, setHasMore, categoryFilter, sortByFilter, sortDirection) => {
+const renderProductsComponent = (productList, setProductList, page, setPage, formTimeUnits, formCategories, hasMore, setHasMore, 
+                                 categoryFilter, sortByFilter, sortDirection, searchStr) => {
     return (
         <>
             <h1 
@@ -43,12 +57,13 @@ const renderProductsComponent = (productList, setProductList, page, setPage, for
                 style={{ fontSize:"32px" }}
             >Anunturi</h1>
             <InfiniteScroll
-                next={() => fetchPage(page, setPage, productList, setProductList, setHasMore, categoryFilter, sortByFilter, sortDirection)} 
+                next={() => fetchPage(page, setPage, productList, setProductList, setHasMore, categoryFilter, 
+                    sortByFilter, sortDirection, searchStr)}
                 hasMore={hasMore} 
                 loader={<Loading />}
                 dataLength={() => productList.length}
             >
-                <div style={{maxWidth: "100vw"}} className={"container row justify-content-center"}>
+                <Row className={"container row justify-content-center mx-auto mb-5"}>
                     {productList.map((product) => (
                         <Product
                             key={product["id"]}
@@ -63,7 +78,7 @@ const renderProductsComponent = (productList, setProductList, page, setPage, for
                             category={formCategories[product["category"]["id"]-1]}
                         />
                     ))}
-                </div>
+                </Row>
             </InfiniteScroll>
         </>
     )

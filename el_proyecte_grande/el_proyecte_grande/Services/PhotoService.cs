@@ -58,12 +58,12 @@ public class PhotoService
     public void UploadPhotoForUser(IFormFile image, string userId)
     {
         string directoryPath = $".\\ClientApp\\public\\UsersImages\\{userId}";
-        string[] files = Directory.GetFiles(directoryPath);
-        
+
         if (!Directory.Exists(directoryPath))
             Directory.CreateDirectory(directoryPath);
         else
         {
+            string[] files = Directory.GetFiles(directoryPath);
             foreach (var file in files)
             {
                 File.Delete(file);
@@ -79,7 +79,12 @@ public class PhotoService
 
     public string GetPhotoForUser(string userId)
     {
-        var fileStream = new DirectoryInfo($"./ClientApp/public/UsersImages/{userId}");
-        return fileStream.GetFiles()[0].Name;
+        if (Directory.Exists($".\\ClientApp\\public\\UsersImages\\{userId}"))
+        {
+            var fileStream = new DirectoryInfo($".\\ClientApp\\public\\UsersImages\\{userId}");
+            return fileStream.GetFiles()[0].Name;
+        }
+
+        return "";
     } 
 }

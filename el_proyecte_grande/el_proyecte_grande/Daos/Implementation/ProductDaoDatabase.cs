@@ -81,6 +81,81 @@ public class ProductDaoDatabase : IProductDao
         }
     }
 
+    public IEnumerable<Product> SearchByPageAndCategory(int pageNumber, int categoryId, SortByEnum sortBy, SortDirectionEnum sortDirection,
+        string searchStr)
+    {
+        switch (sortBy)
+        {
+            case SortByEnum.Nothing:
+                return _context.GetCompleteProducts()
+                    .Where(x => x.Category.Id == categoryId)
+                    .Where(x => x.Name.Contains(searchStr))
+                    .Skip(pageNumber * 10)
+                    .Take(10);
+            case SortByEnum.Name:
+                if (sortDirection == SortDirectionEnum.Descending)
+                {
+                    return _context.GetCompleteProducts()
+                        .Where(x => x.Category.Id == categoryId)
+                        .Where(x => x.Name.Contains(searchStr))
+                        .OrderByDescending(x => x.Name)
+                        .Skip(pageNumber * 10)
+                        .Take(10);
+                }
+                return _context.GetCompleteProducts()
+                    .Where(x => x.Category.Id == categoryId)
+                    .Where(x => x.Name.Contains(searchStr))
+                    .OrderBy(x => x.Name)
+                    .Skip(pageNumber * 10)
+                    .Take(10);
+            case SortByEnum.Date:
+                if (sortDirection == SortDirectionEnum.Descending)
+                {
+                    return _context.GetCompleteProducts()
+                        .Where(x => x.Category.Id == categoryId)
+                        .Where(x => x.Name.Contains(searchStr))
+                        .OrderByDescending(x => x.StartDate)
+                        .Skip(pageNumber * 10)
+                        .Take(10);
+                }
+                return _context.GetCompleteProducts()
+                    .Where(x => x.Category.Id == categoryId)
+                    .Where(x => x.Name.Contains(searchStr))
+                    .OrderBy(x => x.StartDate)
+                    .Skip(pageNumber * 10)
+                    .Take(10);
+            case SortByEnum.Price:
+                if (sortDirection == SortDirectionEnum.Descending)
+                {
+                    return _context.GetCompleteProducts()
+                        .Where(x => x.Category.Id == categoryId)
+                        .Where(x => x.Name.Contains(searchStr))
+                        .AsEnumerable()
+                        .OrderByDescending(x =>
+                            {
+                                return x.Price / RentingHours(x.Unit);
+                            }
+                            ).Skip(pageNumber * 10).Take(10);
+                }
+                return _context.GetCompleteProducts()
+                    .Where(x => x.Category.Id == categoryId)
+                    .Where(x => x.Name.Contains(searchStr))
+                    .AsEnumerable()
+                    .OrderBy(x =>
+                    {
+                        return x.Price / RentingHours(x.Unit);
+                        
+                    }).Skip(pageNumber * 10).Take(10);
+            default: 
+                throw new ArgumentException();
+        }
+    }
+
+    public IEnumerable<Product> SearchByPage(int pageNumber, string searchStr)
+    { 
+        return _context.GetCompleteProducts().Where(x => x.Name.Contains(searchStr)).Skip(pageNumber * 10).Take(10);
+    }
+
     public IEnumerable<Product> GetBy(ApplicationUser user)
         => _context.GetCompleteProducts().Where(x => x.User == user);
 

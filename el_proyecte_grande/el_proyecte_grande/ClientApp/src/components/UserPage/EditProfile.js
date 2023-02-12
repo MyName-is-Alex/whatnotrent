@@ -70,7 +70,7 @@ const EditProfile = () => {
     };
 
     if (!bugFree) {
-        return <ErrorPage redirectUrl={"/add-product"} setBugFree={setBugFree} />
+        return <ErrorPage redirectUrl={"/profile"} setBugFree={setBugFree} />
     }
     if (isCompleted) {
         return <Navigate replace to={"/profile"} />

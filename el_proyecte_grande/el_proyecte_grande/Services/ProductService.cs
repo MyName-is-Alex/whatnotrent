@@ -6,6 +6,7 @@ namespace el_proyecte_grande.Services;
 
 public class ProductService
 {
+    private const int AllCategoryId = 1003;
     private readonly IProductDao productDao;
     private readonly PhotoService _photoService;
 
@@ -26,10 +27,20 @@ public class ProductService
 
     public IEnumerable<Product> GetPageProducts(int pageNumber, int categoryId, SortByEnum sortBy, SortDirectionEnum sortDirection)
     {
-        int allCategoryId = 1003;
-        IEnumerable<Product> products = categoryId != allCategoryId ? productDao.GetByPageAndCategory(pageNumber, categoryId, sortBy, sortDirection) 
+        IEnumerable<Product> products = categoryId != AllCategoryId ? productDao.GetByPageAndCategory(pageNumber, categoryId, sortBy, sortDirection) 
             : productDao.GetByPage(pageNumber);
 
+        products.AddPhotos(_photoService);
+        return products;
+    }
+
+    public IEnumerable<Product> SearchProducts(int pageNumber, int categoryId, SortByEnum sortBy,
+        SortDirectionEnum sortDirection, string searchStr)
+    {
+        IEnumerable<Product> products = categoryId != AllCategoryId
+            ? productDao.SearchByPageAndCategory(pageNumber, categoryId, sortBy, sortDirection, searchStr)
+            : productDao.SearchByPage(pageNumber, searchStr);
+        
         products.AddPhotos(_photoService);
         return products;
     }

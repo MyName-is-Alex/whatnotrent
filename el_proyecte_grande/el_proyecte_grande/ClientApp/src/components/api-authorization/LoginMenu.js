@@ -31,10 +31,10 @@ const populateState = (onChangeAuthenticated, setUserName) => {
 const authenticatedView = (userName, profilePath, logoutPath, logoutState) => {
   return (<Fragment>
     <NavItem>
-      <NavLink tag={Link} className="text-dark" to={profilePath}>Hello {userName}</NavLink>
+      <NavLink tag={Link} className="text-dark fw-bold" to={profilePath}>Profile</NavLink>
     </NavItem>
     <NavItem>
-      <NavLink replace tag={Link} className="text-dark" to={logoutPath} state={logoutState}>Logout</NavLink>
+      <NavLink replace tag={Link} className="text-dark fw-bold" to={logoutPath} state={logoutState}>Logout</NavLink>
     </NavItem>
   </Fragment>);
 }
@@ -42,10 +42,10 @@ const authenticatedView = (userName, profilePath, logoutPath, logoutState) => {
 const anonymousView = (registerPath, loginPath) => {
   return (<Fragment>
     <NavItem>
-      <NavLink tag={Link} className="text-dark" to={registerPath}>Register</NavLink>
+      <NavLink tag={Link} className="text-dark fw-bold" to={registerPath}>Register</NavLink>
     </NavItem>
     <NavItem>
-      <NavLink tag={Link} className="text-dark" to={loginPath}>Login</NavLink>
+      <NavLink tag={Link} className="text-dark fw-bold" to={loginPath}>Login</NavLink>
     </NavItem>
   </Fragment>);
 }
