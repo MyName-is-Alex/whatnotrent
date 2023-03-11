@@ -38,3 +38,13 @@ This project is licensed under the MIT License. See the LICENSE file for details
 ## Contact
 
 If you have any questions or suggestions about WhatNotRent, feel free to contact me at mitualex12@yahoo.com.
+
+## Preview
+![homepage desktop](https://i.ibb.co/fdL9cTF/whatnotrent-homepage-desktop.jpg)
+![login form desktop](https://i.ibb.co/LtRkwTM/whatnotrent-loginform-desktop.jpg)
+![homepage mobile](https://i.ibb.co/JFy5Gvw/whatnotrent-homepage-mobile.jpg)
+![categories desktop](https://i.ibb.co/Z6s51dD/whatnotrent-categories-desktop.jpg)
+
+
+
+
