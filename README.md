@@ -12,9 +12,13 @@ For security reasons the front end got splitted from the back end, access the li
 
 ## Features
 
-Rent or list items for rent
-User-friendly interface
-Secure login and registration with JWT token and Identity
+- Rent or list items for rent
+- User-friendly interface
+- Secure login and registration with JWT token and Identity
+- Preview products
+- Edit your profile page
+- See what you're renting
+- You can add up to 5 photos for each product
 ## Usage
 
 To use WhatNotRent, simply go to the deployed website and create an account or log in if you already have an account. Once you are logged in, you can browse the available items for rent or list your own item for rent.
